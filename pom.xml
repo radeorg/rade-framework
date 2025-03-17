@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.dows.framework</groupId>
+        <artifactId>rade-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.dows.framework</groupId>
+    <artifactId>rade-framework</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+
+    <modules>
+        <module>rade-core</module>
+        <module>rade-security</module>
+        <module>rade-api</module>
+        <module>rade-oauth</module>
+        <module>rade-dbo</module>
+        <module>rade-mgc</module>
+    </modules>
+
+
+    <properties>
+        <revision>1.0.241230-SNAPSHOT</revision>
+        <mybatis-flex-ext.version>1.10.8.120</mybatis-flex-ext.version>
+        <mybatis-flex.version>1.10.8</mybatis-flex.version>
+
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.dows.framework</groupId>
+                <artifactId>rade-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.dows.framework</groupId>
+                <artifactId>rade-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dows.framework</groupId>
+                <artifactId>rade-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!--<dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-processor</artifactId>
+                <version>${mybatis-flex.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.tangzc</groupId>
+                <artifactId>mybatis-flex-ext-autotable</artifactId>
+                <version>${mybatis-flex-ext.version}</version>
+            </dependency>-->
+            <!--
+                        <dependency>
+                            <groupId>org.dows.framework</groupId>
+                            <artifactId>rade-base</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.dows.framework</groupId>
+                            <artifactId>rade-uim</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.dows.framework</groupId>
+                            <artifactId>rade-aac</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.dows.framework</groupId>
+                            <artifactId>rade-rbac</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+            -->
+
+            <!--
+                        <dependency>
+                            <groupId>org.dows.framework</groupId>
+                            <artifactId>rade-log</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.dows.cloud</groupId>
+                            <artifactId>rade-quartz</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.dows.cloud</groupId>
+                            <artifactId>rade-sys</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>
+
+
+                        <dependency>
+                            <groupId>org.dows.cloud</groupId>
+                            <artifactId>rade-app</artifactId>
+                            <version>${project.version}</version>
+                        </dependency>-->
+
+
+            <!--#############################################################-->
+            <!-- springframework start -->
+
+            <!-- springframework end -->
+
+
+
+            <!--##################### 数据库缓存相关 ##########################-->
+            <!--<dependency>
+                <groupId>com.github.ben-manes.caffeine</groupId>
+                <artifactId>caffeine</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <scope>runtime</scope>
+            </dependency>-->
+
+            <!-- mybatis-flex-ext -->
+
+
+            <!--<dependency>
+                <groupId>io.debezium</groupId>
+                <artifactId>debezium-api</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>io.debezium</groupId>
+                <artifactId>debezium-embedded</artifactId>
+            </dependency>-->
+
+
+            <!-- 微信相关 start-->
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-mp</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-pay</artifactId>
+                <version>${weixin-java.version}</version>
+            </dependency>
+            <!-- 微信相关 end-->
+
+
+            <!--<dependency>
+                <groupId>net.roseboy</groupId>
+                <artifactId>classfinal-maven-plugin</artifactId>
+                <version>1.2.1</version>
+            </dependency>-->
+            <!--<dependency>
+                <groupId>com.idea-aedi</groupId>
+                <artifactId>class-winter-maven-plugin</artifactId>
+                <version>2.9.6</version>
+            </dependency>-->
+
+
+            <!--<dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+            </dependency>-->
+
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <dependencies>
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-authorization-server</artifactId>
+        </dependency>-->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>com.mybatis-flex</groupId>
+                            <artifactId>mybatis-flex-processor</artifactId>
+                            <version>${mybatis-flex.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <inherited>true</inherited>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <pomElements>
+                        <parent>expand</parent>
+                        <distributionManagement>remove</distributionManagement>
+                        <repositories>remove</repositories>
+                    </pomElements>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
