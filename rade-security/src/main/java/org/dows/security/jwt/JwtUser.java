@@ -1,7 +1,7 @@
 package org.dows.security.jwt;
 
 import lombok.Data;
-import org.dows.rade.core.enums.UserTypeEnum;
+import org.dows.rade.enums.UserTypeEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

@@ -22,7 +22,7 @@ package org.dows.cdc;//package org.dows.framework.cdc;
 // *         "database.password": "Password!",
 // *         "database.names": "testDB1,testDB2",
 // *         "topic.prefix": "fullfillment",
-// *         "table.include.list": "dbo.customers",
+// *         "table.include.list": "rade.customers",
 // *         "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
 // *         "schema.history.internal.kafka.topic": "schemahistory.fullfillment",
 // *         "database.ssl.truststore": "path/to/trust-store",
@@ -47,7 +47,7 @@ package org.dows.cdc;//package org.dows.framework.cdc;
 //        props.setProperty("database.user", "sa");
 //        props.setProperty("database.password", "12345678!");
 //        props.setProperty("database.names", "demo");
-//        props.setProperty("table.include.list", "dbo.t1");
+//        props.setProperty("table.include.list", "rade.t1");
 ////        props.setProperty("database.server.sequence", "1");
 //        props.setProperty("topic.prefix", "my-app-connector");
 //        props.setProperty("schema.history.internal", "io.debezium.storage.file.history.FileSchemaHistory");

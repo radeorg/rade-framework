@@ -1,8 +1,8 @@
 package org.dows;
 
-import org.dows.dbo.dsl.SqlMeta;
-import org.dows.dbo.dsl.engine.DynamicSqlEngine;
-import org.dows.dbo.dsl.util.OgnlUtil;
+import org.dows.rade.dsl.SqlMeta;
+import org.dows.rade.dsl.engine.DynamicSqlEngine;
+import org.dows.rade.dsl.util.OgnlUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;

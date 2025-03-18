@@ -7,8 +7,8 @@ import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
 import lombok.RequiredArgsConstructor;
-import org.dows.rade.core.config.ConfigProvider;
-import org.dows.rade.core.config.RadeProperties;
+import org.dows.rade.config.ConfigProvider;
+import org.dows.rade.config.RadeProperties;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;

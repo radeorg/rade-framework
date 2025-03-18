@@ -1,6 +1,6 @@
 package org.dows;
 
-import org.dows.dbo.dsl.tag.XmlParser;
+import org.dows.rade.dsl.tag.XmlParser;
 
 /**
  * @description: </br>

@@ -1,6 +1,6 @@
 package org.dows;
 
-import org.dows.dbo.dsl.engine.DynamicSqlEngine;
+import org.dows.rade.dsl.engine.DynamicSqlEngine;
 
 import java.util.HashMap;
 import java.util.Map;
