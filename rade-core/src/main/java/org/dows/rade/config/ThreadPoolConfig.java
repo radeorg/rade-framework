@@ -1,21 +1,19 @@
 package org.dows.rade.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Configuration
+//@Configuration
 @RequiredArgsConstructor
 public class ThreadPoolConfig {
 
     private final LogProperties logProperties;
 
-    @Bean(name = "logTaskExecutor")
+    //@Bean(name = "logTaskExecutor")
     public Executor loggingTaskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 
@@ -34,7 +32,7 @@ public class ThreadPoolConfig {
         return executor;
     }
 
-    @Bean(name = "cachedThreadPool")
+    //@Bean(name = "cachedThreadPool")
     public ExecutorService cachedThreadPool() {
         // 创建一个虚拟线程池，每个任务使用一个虚拟线程执行
         return Executors.newCachedThreadPool();

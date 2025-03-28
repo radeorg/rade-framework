@@ -7,13 +7,12 @@ import org.dromara.autotable.core.converter.DatabaseTypeAndLength;
 import org.dromara.autotable.core.converter.JavaTypeToDatabaseTypeConverter;
 import org.dromara.autotable.core.strategy.pgsql.data.PgsqlDefaultTypeEnum;
 import org.dromara.autotable.core.utils.TableMetadataHandler;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
-@Component
+//@Component
 public class CustomJavaTypeToDatabaseTypeConverter implements JavaTypeToDatabaseTypeConverter {
 
     /**

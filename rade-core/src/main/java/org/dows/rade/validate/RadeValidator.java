@@ -7,14 +7,12 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.annotation.Validators;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Slf4j
 @Data
-@Component
-@Scope("prototype")
+//@Component
+//@Scope("prototype")
 public class RadeValidator implements ConstraintValidator<Validators,String> {
     // 加载数据库中规则校验规则在isValid中校验
     //private final ValidatorProvider validatorProvider;

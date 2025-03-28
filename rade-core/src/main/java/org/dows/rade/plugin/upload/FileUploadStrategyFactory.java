@@ -9,7 +9,6 @@ import org.dows.rade.plugin.PluginDetail;
 import org.dows.rade.plugin.service.RadePluginService;
 import org.dows.rade.plugin.upload.strategy.FileUploadStrategy;
 import org.springframework.context.ApplicationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.io.IOException;
 import static org.dows.rade.plugin.PluginConsts.uploadHook;
 
 @Slf4j
-@Component
+//@Component
 @RequiredArgsConstructor
 public class FileUploadStrategyFactory {
 

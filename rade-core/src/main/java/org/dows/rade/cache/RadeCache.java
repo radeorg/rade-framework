@@ -6,14 +6,10 @@ import cn.hutool.json.JSONUtil;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.dows.rade.util.ConvertUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.CacheType;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheWriter;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -21,9 +17,7 @@ import java.util.Arrays;
 /**
  * 缓存工具类
  */
-@EnableCaching
-@Configuration
-@Component
+//@Component
 @RequiredArgsConstructor
 public class RadeCache {
 
@@ -31,17 +25,18 @@ public class RadeCache {
     final private CacheManager cacheManager;
     // redis
     public RedisCacheWriter redisCache;
-    // 缓存类型
-    @Value("${spring.cache.type}")
-    private String type;
     private Cache cache;
-    @Value("${rade.cacheName}")
-    private String cacheName;
+    private String type;
+    // 缓存类型
+    //@Value("${spring.cache.type}")
+    private final String cacheType;
+    //@Value("${rade.cacheName}")
+    private final String cacheName;
 
     @PostConstruct
     private void init() {
         cache = cacheManager.getCache(cacheName);
-        this.type = type.toLowerCase();
+        this.type = cacheType.toLowerCase();
         assert cache != null : "Cache not found: " + cacheName; // Ensure cache is not null
         if (type.equalsIgnoreCase(CacheType.REDIS.name())) {
             redisCache = (RedisCacheWriter) cache.getNativeCache();

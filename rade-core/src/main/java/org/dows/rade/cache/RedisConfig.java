@@ -1,4 +1,4 @@
-package org.dows.rade.config.cache;
+package org.dows.rade.cache;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;

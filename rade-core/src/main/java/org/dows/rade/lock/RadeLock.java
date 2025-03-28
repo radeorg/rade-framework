@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.CacheType;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
-import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class RadeLock {
     // 非redis方式时使用

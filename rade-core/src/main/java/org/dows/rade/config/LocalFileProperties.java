@@ -3,7 +3,6 @@ package org.dows.rade.config;
 import lombok.Data;
 import org.dows.rade.util.PathUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 
@@ -11,7 +10,7 @@ import java.io.File;
  * 文件
  */
 @Data
-@Configuration
+//@Configuration
 @ConfigurationProperties(prefix = "rade.upload.local")
 public class LocalFileProperties {
 

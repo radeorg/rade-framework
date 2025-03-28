@@ -8,12 +8,11 @@ import cn.hutool.extra.template.TemplateConfig;
 import cn.hutool.extra.template.TemplateEngine;
 import cn.hutool.extra.template.TemplateUtil;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
 
 /**
  * 代码生成器
  */
-@Component
+//@Component
 public class CodeGenerator {
 
     private TemplateEngine templateEngine;

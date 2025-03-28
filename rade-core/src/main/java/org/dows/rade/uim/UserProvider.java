@@ -1,4 +1,4 @@
-package org.dows.rade.uat;
+package org.dows.rade.uim;
 
 import cn.hutool.core.lang.Dict;
 import org.dows.rade.security.SecurityUser;

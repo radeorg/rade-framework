@@ -2,13 +2,12 @@ package org.dows.rade.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * token配置
  */
 @Data
-@Configuration
+//@Configuration
 @ConfigurationProperties(prefix = "rade.token")
 public class TokenProperties {
     // token 过期时间

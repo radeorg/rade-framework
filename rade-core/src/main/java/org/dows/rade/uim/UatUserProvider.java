@@ -1,4 +1,4 @@
-package org.dows.rade.uat;
+package org.dows.rade.uim;
 
 /**
  * @description: </br>

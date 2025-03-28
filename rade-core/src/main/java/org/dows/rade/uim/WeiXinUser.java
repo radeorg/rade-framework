@@ -1,4 +1,4 @@
-package org.dows.rade.uat;
+package org.dows.rade.uim;
 
 /**
  * @description: </br>
@@ -8,49 +8,52 @@ package org.dows.rade.uat;
  * <author>      <time>      <version>    <desc>
  * 修改人姓名      修改时间        版本号       描述
  */
-public interface UatUser {
+public interface WeiXinUser {
 
-    // 主键
     Long getId();
 
     void setId(Long id);
 
-    //登录唯一ID
+    //微信unionid
     String getUnionid();
 
     void setUnionid(String unionid);
 
-    //头像
+    //微信openid
+    String getOpenid();
+
+    void setOpenid(String openid);
+
     String getAvatarUrl();
 
     void setAvatarUrl(String avatarUrl);
 
-    //昵称
     String getNickName();
 
     void setNickName(String nickName);
 
-    String getPhone();
-
-    void setPhone(String phone);
-
-    //性别 0-未知 1-男 2-女
     Integer getGender();
 
     void setGender(Integer gender);
 
-    //状态 0-禁用 1-正常 2-已注销
-    Integer getStatus();
+    String getLanguage();
 
-    void setStatus(Integer status);
+    void setLanguage(String language);
 
-    //登录方式 0-小程序 1-公众号 2-H5
-    String getLoginType();
+    String getCity();
 
-    void setLoginType(String loginType);
+    void setCity(String city);
 
-    //密码
-    String getPassword();
+    String getProvince();
 
-    void setPassword(String password);
+    void setProvince(String province);
+
+    String getCountry();
+
+    void setCountry(String country);
+
+    //类型 0-小程序 1-公众号 2-H5 3-APP 默认0
+    Integer getType();
+
+    void setType(Integer type);
 }

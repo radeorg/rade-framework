@@ -11,13 +11,12 @@ import org.dows.rade.config.LocalFileProperties;
 import org.dows.rade.exception.RadeException;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.plugin.PluginDetail;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.*;
 
-@Component("localFileUploadStrategy")
+//@Component("localFileUploadStrategy")
 @RequiredArgsConstructor
 public class LocalFileUploadStrategy implements FileUploadStrategy {
 

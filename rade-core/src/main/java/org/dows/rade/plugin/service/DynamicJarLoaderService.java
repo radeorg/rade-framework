@@ -8,11 +8,10 @@ import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.exception.RadePreconditions;
+import org.dows.rade.plugin.DynamicJarClassLoader;
 import org.dows.rade.plugin.PluginDetail;
 import org.dows.rade.plugin.PluginJson;
 import org.dows.rade.plugin.PluginRepository;
-import org.dows.rade.plugin.DynamicJarClassLoader;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +29,7 @@ import java.util.jar.JarFile;
  * 动态加载jar包
  */
 @Slf4j
-@Service
+//@Service
 @RequiredArgsConstructor
 public class DynamicJarLoaderService {
 

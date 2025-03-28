@@ -12,14 +12,13 @@ import org.springdoc.core.service.OperationService;
 import org.springdoc.webmvc.api.OpenApiResource;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 
 /**
  * 自定义 OpenApiResource
  */
-@Component
+//@Component
 @ConditionalOnProperty(
         name = "springdoc.api-docs.enabled",
         havingValue = "true"

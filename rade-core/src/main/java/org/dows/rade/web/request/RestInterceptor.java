@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.dows.rade.annotation.RadeController;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -13,7 +12,7 @@ import java.util.Arrays;
 /**
  * 通用方法rest接口
  */
-@Component
+//@Component
 public class RestInterceptor implements HandlerInterceptor {
     private final static String[] rests = {"add", "delete", "update", "info", "list", "page"};
 

@@ -12,15 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.dows.rade.exception.RadeException;
 import org.dows.rade.exception.RadePreconditions;
-import org.dows.rade.plugin.PluginDetail;
-import org.dows.rade.plugin.PluginJson;
-import org.dows.rade.plugin.PluginRepository;
-import org.dows.rade.plugin.RadePluginInvokers;
-import org.dows.rade.plugin.DynamicJarClassLoader;
+import org.dows.rade.plugin.*;
 import org.dows.rade.util.MapExtUtil;
 import org.dows.rade.util.PathUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -35,7 +30,7 @@ import java.util.List;
  * 插件服务类
  */
 @Slf4j
-@Service
+//@Service
 @RequiredArgsConstructor
 public class RadePluginService {
 

@@ -8,7 +8,6 @@ import org.dows.rade.cache.RadeCache;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.plugin.RadePluginInvokers;
 import org.dows.rade.plugin.service.RadePluginService;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +24,7 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @Slf4j
-@Component
+//@Component
 public class SmsProvider {
     private final RadePluginService radePluginService;
     private final RadeCache radeCache;

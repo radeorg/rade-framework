@@ -2,7 +2,6 @@ package org.dows.rade.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @description: </br>
@@ -13,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * 修改人姓名      修改时间        版本号       描述
  */
 @Data
-@Configuration
+//@Configuration
 @ConfigurationProperties(prefix = "rade.cache")
 public class CacheProperties {
     private boolean enable;

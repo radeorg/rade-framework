@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.dows.rade.enums.UserTypeEnum;
 import org.dows.rade.security.SecurityProvider;
 import org.dows.rade.util.BodyReaderHttpServletRequestWrapper;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -23,8 +21,8 @@ import java.util.Map;
  * 封装请求参数 URL参数 和 body JSON 到同一个 JSONObject 方便读取
  */
 @RequiredArgsConstructor
-@Component
-@Order(2)
+//@Component
+//@Order(2)
 public class RequestParamsFilter implements Filter {
 
     final private SecurityProvider securityProvider;

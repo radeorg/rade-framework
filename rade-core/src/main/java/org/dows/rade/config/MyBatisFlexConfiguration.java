@@ -2,9 +2,8 @@ package org.dows.rade.config;
 
 import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.spring.boot.MyBatisFlexCustomizer;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class MyBatisFlexConfiguration implements MyBatisFlexCustomizer {
 
     @Override

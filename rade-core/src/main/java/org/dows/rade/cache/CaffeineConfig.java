@@ -1,4 +1,4 @@
-package org.dows.rade.config.cache;
+package org.dows.rade.cache;
 
 import com.github.benmanes.caffeine.cache.Caffeine;
 import jakarta.annotation.PostConstruct;
@@ -26,9 +26,16 @@ public class CaffeineConfig {
 
     @Value("${spring.cache.file}")
     private String cacheFile;
-
+    @Value("${spring.cache.type}")
+    private  String cacheType;
     @Value("${rade.cacheName}")
     private String cacheName;
+
+
+    @Bean
+    RadeCache radeCache() {
+        return new RadeCache(cacheManager(caffeine()),cacheType,cacheName);
+    }
 
     @Bean
     public Caffeine<Object, Object> caffeine() {
