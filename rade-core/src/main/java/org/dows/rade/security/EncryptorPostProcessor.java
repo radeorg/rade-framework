@@ -1,12 +1,9 @@
 package org.dows.rade.security;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.rade.config.ConfigEncryptProperties;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.env.EnvironmentPostProcessor;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MapPropertySource;
 import org.springframework.core.env.PropertySource;
@@ -18,21 +15,23 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Component
 @Slf4j
-@RequiredArgsConstructor
-@Configuration
-@EnableConfigurationProperties(ConfigEncryptProperties.class)
-@ConditionalOnProperty(name = "rade.encryptor.enable", havingValue = "true")
 public class EncryptorPostProcessor implements EnvironmentPostProcessor {
 
-    private ConfigEncryptProperties configEncryptProperties;
     // 默认
     private static final String ALGORITHM = "AES";
     private static final String SECRET_KEY = "3fb2uPksjNOnxZI3";
 
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        // 手动检查配置属性
+        String enableEncryptor = environment.getProperty("rade.encryptor.enable", "false");
+        if (!"true".equalsIgnoreCase(enableEncryptor)) {
+            return;
+        }
+
+        ConfigEncryptProperties configEncryptProperties = loadConfigEncryptProperties(environment);
+
         Map<String, Object> decryptedProperties = new HashMap<>();
         // 遍历所有 PropertySource
         for (PropertySource<?> propertySource : environment.getPropertySources()) {
@@ -43,7 +42,7 @@ public class EncryptorPostProcessor implements EnvironmentPostProcessor {
                     Object propertyValue = mapPropertySource.getProperty(propertyName);
                     if (propertyValue != null && propertyValue.toString().startsWith("encrypted$")) {
                         String encryptedValue = propertyValue.toString().substring("encrypted$".length());
-                        String decryptedValue = decrypt(encryptedValue);
+                        String decryptedValue = decrypt(encryptedValue, configEncryptProperties);
                         decryptedProperties.put(propertyName, decryptedValue);
                     }
                 }
@@ -53,7 +52,16 @@ public class EncryptorPostProcessor implements EnvironmentPostProcessor {
         environment.getPropertySources().addFirst(new MapPropertySource("decryptedProperties", decryptedProperties));
     }
 
-    private String decrypt(String encryptedValue) {
+    private ConfigEncryptProperties loadConfigEncryptProperties(ConfigurableEnvironment environment) {
+        ConfigEncryptProperties configEncryptProperties = new ConfigEncryptProperties();
+        String algorithm = environment.getProperty("rade.encryptor.algorithm", ALGORITHM);
+        String secretKey = environment.getProperty("rade.encryptor.secretKey", SECRET_KEY);
+        configEncryptProperties.setAlgorithm(algorithm);
+        configEncryptProperties.setSecretKey(secretKey);
+        return configEncryptProperties;
+    }
+
+    private String decrypt(String encryptedValue, ConfigEncryptProperties configEncryptProperties) {
         try {
             String algorithm = configEncryptProperties.getAlgorithm();
             byte[] keys = configEncryptProperties.getSecretKey().getBytes(StandardCharsets.UTF_8);
@@ -68,3 +76,4 @@ public class EncryptorPostProcessor implements EnvironmentPostProcessor {
         }
     }
 }
+   

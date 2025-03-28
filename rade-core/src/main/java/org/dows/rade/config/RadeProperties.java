@@ -21,7 +21,7 @@ public class RadeProperties {
     private FileProperties file;
     // 初始化
     @NestedConfigurationProperty
-    private InitializerProperties initializer;
+    private InitializeProperties initialize;
 
 
 }

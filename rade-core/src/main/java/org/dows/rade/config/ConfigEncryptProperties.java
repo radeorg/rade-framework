@@ -1,4 +1,4 @@
-package org.dows.rade.security;
+package org.dows.rade.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -13,7 +13,7 @@ public class ConfigEncryptProperties {
     private boolean enable;
     private String secretKey;
     private String algorithm;
-    private Class<?> generatorClass;
+    private Class<?> encryptClass;
 
 
 }
