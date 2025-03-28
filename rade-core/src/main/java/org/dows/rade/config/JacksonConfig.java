@@ -6,20 +6,31 @@ import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 import com.fasterxml.jackson.databind.ser.std.NumberSerializer;
 import org.dows.rade.enums.RadeEnum;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 
-@Configuration
+//@Configuration
 public class JacksonConfig {
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(){
+//    @Bean
+
+    /**
+     * usage mode :
+     *      todo:
+     *      @Bean
+     *      public Jackson2ObjectMapperBuilderCustomizer  jackson2ObjectMapperBuilderCustomizer(){
+     *          JacksonConfig.jackson2ObjectMapperBuilderCustomizer("yyyy-MM-dd HH:mm:ss");
+     *      }
+     * 配置日期格式为 yyyy-MM-dd HH:mm:ss
+     *
+     * @param format
+     * @return
+     */
+    public static Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(String format) {
         return jacksonObjectMapperBuilder->{
             // 配置日期格式为 yyyy-MM-dd HH:mm:ss
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat(format);
             jacksonObjectMapperBuilder.serializerByType(Long.TYPE, BigNumberSerializer.INSTANCE)
                     .serializerByType(BigInteger.class, BigNumberSerializer.INSTANCE)
                     .dateFormat(dateFormat)
