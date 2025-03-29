@@ -39,6 +39,6 @@ public class CustomOpenApiResource extends OpenApiResource {
     }
 
     public byte[] getOpenApiJson() throws JsonProcessingException {
-        return writeJsonValue(getOpenApi(Locale.getDefault()));
+        return writeJsonValue(getOpenApi("", Locale.getDefault()));
     }
 }

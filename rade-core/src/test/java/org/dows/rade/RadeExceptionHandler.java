@@ -1,0 +1,116 @@
+//package org.dows.rade.exception;
+//
+//import cn.hutool.core.util.ObjUtil;
+//import lombok.extern.slf4j.Slf4j;
+//import org.dows.rade.web.Response;
+//import org.dows.rade.web.UnifiedMessageSource;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Value;
+//import org.springframework.core.Ordered;
+//import org.springframework.core.annotation.Order;
+//import org.springframework.dao.DuplicateKeyException;
+//import org.springframework.validation.BindingResult;
+//import org.springframework.web.HttpRequestMethodNotSupportedException;
+//import org.springframework.web.bind.MethodArgumentNotValidException;
+//import org.springframework.web.bind.annotation.ExceptionHandler;
+//import org.springframework.web.bind.annotation.RestControllerAdvice;
+//
+//import java.util.HashMap;
+//import java.util.Map;
+//
+///**
+// * 异常处理器
+// */
+//@RestControllerAdvice
+//@Slf4j
+//@Order(Ordered.LOWEST_PRECEDENCE - 1)
+//public class RadeExceptionHandler {
+//
+//    @Autowired(required = false)
+//    private UnifiedMessageSource unifiedMessageSource;
+//    /**
+//     * 生产环境
+//     */
+//    private final static String ENV_PRD = "prd";
+//
+//    @Value("${spring.application.name:}")
+//    private String serviceName;
+//    /**
+//     * 当前环境
+//     */
+//    @Value("${spring.profiles.active:}")
+//    private String profile;
+//
+//
+//    // validator参数校验异常处理
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public Response handleMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+//        Response response = new Response();
+//        BindingResult result = exception.getBindingResult();
+//        Map<String, String> errorMap = new HashMap<>();
+//        result.getFieldErrors().forEach(fieldError -> {
+//            String field = fieldError.getField();
+//            String message = fieldError.getDefaultMessage();
+//            errorMap.put(field, message);
+//        });
+//        //return Response.error(errorMap);
+//        return response;
+//    }
+//
+//    /**
+//     * 业务异常处理
+//     * @param e
+//     * @return
+//     */
+//    @ExceptionHandler(RadeException.class)
+//    public Response handleRRException(RadeException e) {
+//        Response response = new Response();
+//        if (ObjUtil.isNotEmpty(e.getData())) {
+//            response.put("data", e.getData());
+//        } else {
+//            response.put("code", e.getCode());
+//            response.put("message", e.getMessage());
+//        }
+//        if (ObjUtil.isNotEmpty(e.getCause())) {
+//            log.error(e.getCause().getMessage(), e.getCause());
+//        }
+//        return response;
+//    }
+//
+//    @ExceptionHandler(DuplicateKeyException.class)
+//    public Response handleDuplicateKeyException(DuplicateKeyException e) {
+//        log.error(e.getMessage(), e);
+//        return Response.error("已存在该记录或值不能重复");
+//    }
+//
+//    /*@ExceptionHandler(BadCredentialsException.class)
+//    public Response handleBadCredentialsException(BadCredentialsException e) {
+//        log.error(e.getMessage(), e);
+//        return Response.error("账户密码不正确");
+//    }*/
+//
+//    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+//    public Response handleHttpRequestMethodNotSupportedException(
+//            HttpRequestMethodNotSupportedException e) {
+//        log.error(e.getMessage(), e);
+//        return Response.error("不支持该请求方式，请区分POST、GET等请求方式是否正确");
+//    }
+//
+//    @ExceptionHandler(IllegalArgumentException.class)
+//    public Response handleIllegalArgumentException(IllegalArgumentException e) {
+//        log.error(e.getMessage(), e);
+//        return Response.error(e.getMessage());
+//    }
+//
+//    @ExceptionHandler(Exception.class)
+//    public Response handleException(Exception e) {
+//        log.error(e.getMessage(), e);
+//        return Response.error();
+//    }
+//
+///*    @ExceptionHandler(WxErrorException.class)
+//    public Response handleException(WxErrorException e) {
+//        log.error(e.getMessage(), e);
+//        return Response.error(e.getMessage());
+//    }*/
+//}

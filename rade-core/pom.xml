@@ -11,6 +11,11 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.dows.framework</groupId>
+            <artifactId>rade-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>

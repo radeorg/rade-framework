@@ -6,7 +6,6 @@ import jakarta.validation.ConstraintValidatorContext;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.dows.rade.annotation.Validators;
 
 @RequiredArgsConstructor
 @Slf4j

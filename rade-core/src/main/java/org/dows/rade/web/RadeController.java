@@ -1,4 +1,4 @@
-package org.dows.rade.annotation;
+package org.dows.rade.web;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,7 +2,7 @@ package org.dows.rade.web.request;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.dows.rade.annotation.RadeController;
+import org.dows.rade.web.RadeController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;

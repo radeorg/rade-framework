@@ -41,7 +41,7 @@ public class RadePreconditions {
     private static RadeException getRadeException(String message, int code, Object... arguments) {
         Optional<Object> first = Arrays.stream(arguments).filter(o -> o instanceof Throwable)
                 .findFirst();
-        return new RadeException(formatMessage(message, arguments), code, (Throwable) first.orElse(null));
+        return new RadeException(code, formatMessage(message, arguments), (Throwable) first.orElse(null));
     }
 
 

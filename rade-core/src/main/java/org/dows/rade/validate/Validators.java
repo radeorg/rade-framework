@@ -1,8 +1,7 @@
-package org.dows.rade.annotation;
+package org.dows.rade.validate;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.dows.rade.validate.RadeValidator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
