@@ -1,6 +1,5 @@
 package org.dows.rade.web;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -39,7 +38,7 @@ public class Response<T> implements Serializable {
 
     //@ApiModelProperty(value = "响应时间")
     @Schema(title = "响应时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date timestamp = new Date();
     //@ApiModelProperty(value = "响应数据")
     @Schema(title = "响应数据")
