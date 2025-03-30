@@ -39,8 +39,6 @@ import java.nio.file.AccessDeniedException;
 import java.security.SignatureException;
 import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.zip.DataFormatException;
 
 import static org.springframework.util.StringUtils.hasText;
@@ -52,7 +50,7 @@ import static org.springframework.util.StringUtils.hasText;
 @RequiredArgsConstructor
 //@RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
-public class RadeExceptionHandler /*implements ResponseBodyAdvice<Object>*/ {
+public class RadeExceptionHandler  {
 
     private final UnifiedMessageSource unifiedMessageSource;
     /**
@@ -71,22 +69,31 @@ public class RadeExceptionHandler /*implements ResponseBodyAdvice<Object>*/ {
 //    @Autowired
 //    private AacConfig aacConfig;
 
-    // validator参数校验异常处理
+    /**
+     * 参数校验(Valid)异常，validator参数校验异常处理 将校验失败的所有异常组合成一条错误信息
+     *
+     * @param request  请求参数
+     * @param response 响应参数
+     * @param e        异常
+     * @return 异常结果
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Response handleMethodArgumentNotValidException(MethodArgumentNotValidException exception) {
-        Response response = new Response();
-        BindingResult result = exception.getBindingResult();
+    public Response handleMethodArgumentNotValidException(HttpServletRequest request, HttpServletResponse response,
+                                                          MethodArgumentNotValidException e) {
+        log.error("调用={}服务出现方法参数校验异常，请求的url是={}，请求的方法是={}，原因={}", serviceName, request.getRequestURL(),
+                request.getMethod(), e);
+        /*Response returnResponse = new Response();
+        BindingResult result = e.getBindingResult();
         Map<String, String> errorMap = new HashMap<>();
         result.getFieldErrors().forEach(fieldError -> {
             String field = fieldError.getField();
             String message = fieldError.getDefaultMessage();
             errorMap.put(field, message);
         });
-        response.setData(errorMap);
-        //response.putAll(errorMap);
-        //return Response.error(errorMap);
-        return response;
+        returnResponse.setData(errorMap);*/
+        return wrapperBindingResult(e.getBindingResult());
     }
+
 
     //    /**
 //     * 业务异常处理
@@ -121,18 +128,9 @@ public class RadeExceptionHandler /*implements ResponseBodyAdvice<Object>*/ {
         return Response.error("账户密码不正确");
     }*/
 
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Response handleHttpRequestMethodNotSupportedException(
-            HttpRequestMethodNotSupportedException e) {
-        log.error(e.getMessage(), e);
-        return Response.failed("不支持该请求方式，请区分POST、GET等请求方式是否正确");
-    }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public Response handleIllegalArgumentException(IllegalArgumentException e) {
-        log.error(e.getMessage(), e);
-        return Response.failed(e.getMessage());
-    }
+
+
 //
 //    @ExceptionHandler(Exception.class)
 //    public Response handleException(Exception e) {
@@ -212,21 +210,7 @@ public class RadeExceptionHandler /*implements ResponseBodyAdvice<Object>*/ {
         return wrapperBindingResult(e.getBindingResult());
     }
 
-    /**
-     * 参数校验(Valid)异常，将校验失败的所有异常组合成一条错误信息
-     *
-     * @param request  请求参数
-     * @param response 响应参数
-     * @param e        异常
-     * @return 异常结果
-     */
-    @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    public Response<?> handleValidException(HttpServletRequest request, HttpServletResponse response,
-                                            MethodArgumentNotValidException e) {
-        log.error("调用={}服务出现方法参数校验异常，请求的url是={}，请求的方法是={}，原因={}", serviceName, request.getRequestURL(),
-                request.getMethod(), e);
-        return wrapperBindingResult(e.getBindingResult());
-    }
+
 
     /**
      * 其他未定义的异常
@@ -306,10 +290,9 @@ public class RadeExceptionHandler /*implements ResponseBodyAdvice<Object>*/ {
      * http请求的方法不正确
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    @ResponseBody
-    public Response httpRequestMethodNotSupportedExceptionHandler(HttpRequestMethodNotSupportedException e) {
-        log.error("http请求的方法不正确:【" + e.getMessage() + "】", e);
-        return Response.failed("http请求的方法不正确");
+    public Response handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        log.error(e.getMessage(), e);
+        return Response.failed("不支持该请求方式，请区分POST、GET等请求方式是否正确");
     }
 
     /**
@@ -409,10 +392,7 @@ public class RadeExceptionHandler /*implements ResponseBodyAdvice<Object>*/ {
         return Response.failed("500", e.getMessage());
     }
 
-    @ExceptionHandler(value = {DuplicateKeyException.class})
-    public Response<?> duplicateKeyExceptionHandler(DuplicateKeyException e) {
-        return Response.failed("500", e.getMessage());
-    }
+
 
 
 
