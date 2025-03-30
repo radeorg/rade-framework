@@ -50,7 +50,7 @@ import static org.springframework.util.StringUtils.hasText;
 @RequiredArgsConstructor
 //@RestControllerAdvice
 @Order(Ordered.LOWEST_PRECEDENCE - 1)
-public class RadeExceptionHandler  {
+public abstract class RadeExceptionHandler {
 
     private final UnifiedMessageSource unifiedMessageSource;
     /**
