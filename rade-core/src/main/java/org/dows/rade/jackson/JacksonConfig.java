@@ -11,7 +11,7 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 import java.util.Date;
 
-
+@ConditionalOnProperty(name = "rade.jackson.timestamp", havingValue = "true")
 @Configuration
 public class JacksonConfig {
 
@@ -19,7 +19,6 @@ public class JacksonConfig {
     private boolean timestamp;
 
     @Bean
-    @ConditionalOnProperty(name = "rade.jackson.timestamp", havingValue = "true")
     public ObjectMapper objectMapper(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
         if (timestamp) {
