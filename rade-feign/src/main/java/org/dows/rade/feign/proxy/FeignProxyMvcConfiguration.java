@@ -1,8 +1,8 @@
-package org.dows.rade.feign.a.test;
+package org.dows.rade.feign.proxy;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.core.DefaultParameterNameDiscoverer;
 import org.springframework.core.GenericTypeResolver;
@@ -27,10 +27,10 @@ import java.util.Map;
 
 public class FeignProxyMvcConfiguration {
 
-    @Autowired
+    @Resource
     private RequestMappingHandlerAdapter adapter;
 
-    @Autowired
+    @Resource
     private ConfigurableBeanFactory beanFactory;
 
     public static MethodParameter interfaceMethodParameter(MethodParameter parameter, Class<? extends Annotation> annotationType) {

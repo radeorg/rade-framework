@@ -1,4 +1,4 @@
-package org.dows.rade.feign.a.test;
+package org.dows.rade.feign.proxy;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;

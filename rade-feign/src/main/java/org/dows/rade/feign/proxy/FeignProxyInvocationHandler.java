@@ -1,4 +1,4 @@
-package org.dows.rade.feign.a.test;
+package org.dows.rade.feign.proxy;
 
 import org.springframework.aop.support.AopUtils;
 import org.springframework.cglib.proxy.InvocationHandler;
