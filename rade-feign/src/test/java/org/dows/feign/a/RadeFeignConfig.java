@@ -1,4 +1,4 @@
-package org.dows.rade.feign.a;
+package org.dows.feign.a;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.*;

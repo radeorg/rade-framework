@@ -1,4 +1,4 @@
-package org.dows.rade.feign.a;
+package org.dows.feign.a;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
