@@ -21,6 +21,7 @@
         <module>rade-oauth</module>
         <module>rade-dbo</module>
         <module>rade-mgc</module>
+        <module>rade-feign</module>
     </modules>
 
 

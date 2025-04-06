@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.core.activerecord.Model;
 import com.mybatisflex.core.query.QueryWrapper;
-import com.tangzc.mybatisflex.autotable.annotation.ColumnDefine;
 import lombok.Getter;
 import lombok.Setter;
 import org.dromara.autotable.annotation.Ignore;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -53,10 +51,9 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
                 Field field = this.getClass().getField(entityName);
                 tableIdFields.put(this.getClass(), field);
             }
+            assert idField != null;
             return (Long) idField.get(this);
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
         //throw new UnsupportedOperationException("Not supported yet.");
