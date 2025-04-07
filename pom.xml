@@ -16,9 +16,7 @@
 
     <modules>
         <module>rade-core</module>
-        <module>rade-security</module>
         <module>rade-api</module>
-        <module>rade-oauth</module>
         <module>rade-dbo</module>
         <module>rade-mgc</module>
         <module>rade-feign</module>
