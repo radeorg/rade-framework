@@ -2,8 +2,8 @@ package org.dows.rade.plugin;
 
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.exception.RadePreconditions;
-import org.dows.rade.util.AnnotationUtils;
-import org.dows.rade.util.CompilerUtils;
+import org.dows.rade.util.AnnotationUtil;
+import org.dows.rade.util.CompilerUtil;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -72,19 +72,19 @@ public class DynamicJarClassLoader extends URLClassLoader {
     public void loadClass(JarEntry jarEntry, List<Class<?>> plugins) {
         String entryName = jarEntry.getName();
         String className = entryName.replace('/', '.').substring(0, entryName.length() - 6);
-        if (entryName.startsWith(CompilerUtils.META_INF_VERSIONS)) {
+        if (entryName.startsWith(CompilerUtil.META_INF_VERSIONS)) {
             // 处理多版本类
-            String jdkVersion = CompilerUtils.getJdkVersion();
-            if (!entryName.startsWith(CompilerUtils.META_INF_VERSIONS + jdkVersion)) {
+            String jdkVersion = CompilerUtil.getJdkVersion();
+            if (!entryName.startsWith(CompilerUtil.META_INF_VERSIONS + jdkVersion)) {
                 return;
             }
             // 替换版本目录
-            className = className.replace((CompilerUtils.META_INF_VERSIONS + jdkVersion).replace("/", ".") + ".", "");
+            className = className.replace((CompilerUtil.META_INF_VERSIONS + jdkVersion).replace("/", ".") + ".", "");
         }
         try {
             // 加载类
             Class<?> clazz = super.loadClass(className);
-            if (plugins != null && AnnotationUtils.hasPluginAnnotation(clazz)) {
+            if (plugins != null && AnnotationUtil.hasPluginAnnotation(clazz)) {
                 // 添加插件
                 plugins.add(clazz);
             }

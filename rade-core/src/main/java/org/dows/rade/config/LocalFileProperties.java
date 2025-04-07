@@ -1,7 +1,7 @@
 package org.dows.rade.config;
 
 import lombok.Data;
-import org.dows.rade.util.PathUtils;
+import org.dows.rade.util.PathUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.io.File;
@@ -20,7 +20,7 @@ public class LocalFileProperties {
     private String uploadPath = "assets/public/upload";
 
     public String getAbsoluteUploadFolder() {
-        if (!PathUtils.isAbsolutePath(uploadPath)) {
+        if (!PathUtil.isAbsolutePath(uploadPath)) {
             // 相对路径
             return System.getProperty("user.dir") + File.separator + uploadPath;
         }

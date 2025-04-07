@@ -14,7 +14,7 @@ import org.dows.rade.exception.RadeException;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.plugin.*;
 import org.dows.rade.util.MapExtUtil;
-import org.dows.rade.util.PathUtils;
+import org.dows.rade.util.PathUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -144,7 +144,7 @@ public class RadePluginService {
      */
     private File saveJarFile(MultipartFile file) throws IOException {
         String pathStr = pluginPath;
-        if (!PathUtils.isAbsolutePath(pluginPath)) {
+        if (!PathUtil.isAbsolutePath(pluginPath)) {
             // 相对路径
             pathStr = System.getProperty("user.dir") + File.separator + pluginPath;
         }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class IPUtils {
+public class IpUtil {
 
     /**
      * 获取IP地址

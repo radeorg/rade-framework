@@ -2,8 +2,8 @@ package org.dows.rade.crud.service;
 
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.TypeUtil;
+import cn.hutool.extra.spring.SpringUtil;
 import com.mybatisflex.core.BaseMapper;
-import org.dows.rade.util.SpringContextUtils;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -20,7 +20,7 @@ public class MapperProviderService {
      */
     private void init() {
         // 获取所有BaseMapper类型的Bean
-        Map<String, BaseMapper> beansOfType = SpringContextUtils.getBeansOfType(BaseMapper.class);
+        Map<String, BaseMapper> beansOfType = SpringUtil.getBeansOfType(BaseMapper.class);
         mapperMap = new HashMap<>();
         for (BaseMapper mapper : beansOfType.values()) {
             // 通过反射获取泛型参数，即实体类

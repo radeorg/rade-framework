@@ -1,6 +1,5 @@
 package org.dows.rade.util;
 
-import cn.hutool.core.io.file.PathUtil;
 import cn.hutool.core.text.AntPathMatcher;
 import org.dows.rade.init.AppInstance;
 
@@ -9,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class PathUtils {
+public class PathUtil {
     private static final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     public static boolean isAbsolutePath(String pathStr) {
@@ -23,7 +22,7 @@ public class PathUtils {
 
     public static String getModulesPath() {
         // 获取当前应用实例
-        AppInstance bean = SpringContextUtils.getBean(AppInstance.class);
+        AppInstance bean = SpringUtil.getBean(AppInstance.class);
         return getUserDir() + getSrcMainJava() + File.separator + bean.getAppClass().getPackageName()
                 .replace(".", File.separator) + File.separator + "modules";
     }
@@ -54,8 +53,8 @@ public class PathUtils {
      */
     public static void noExistsMk(String pathStr) {
         Path path = Paths.get(pathStr);
-        if (PathUtil.exists(path, false)) {
-            PathUtil.mkParentDirs(path);
+        if (cn.hutool.core.io.file.PathUtil.exists(path, false)) {
+            cn.hutool.core.io.file.PathUtil.mkParentDirs(path);
         }
     }
 

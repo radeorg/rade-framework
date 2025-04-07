@@ -12,7 +12,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Modifier;
 
 @Slf4j
-public class AnnotationUtils {
+public class AnnotationUtil {
 
     /**
      * 判断一个类是否有 Spring 核心注解

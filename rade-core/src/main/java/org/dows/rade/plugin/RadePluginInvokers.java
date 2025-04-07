@@ -4,7 +4,7 @@ import cn.hutool.json.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.plugin.service.DynamicJarLoaderService;
-import org.dows.rade.util.SpringContextUtils;
+import org.dows.rade.util.SpringUtil;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,8 +17,7 @@ import java.util.Arrays;
 @Slf4j
 public class RadePluginInvokers {
 
-    private static final DynamicJarLoaderService dynamicJarLoaderService = SpringContextUtils
-            .getBean(DynamicJarLoaderService.class);
+    private static final DynamicJarLoaderService dynamicJarLoaderService = SpringUtil.getBean(DynamicJarLoaderService.class);
 
     /**
      * 插件默认调用入口
@@ -47,7 +46,7 @@ public class RadePluginInvokers {
             Method method = beanInstance.getClass().getSuperclass()
                     .getMethod(PluginConsts.setApplicationContext,
                             ApplicationContext.class);
-            method.invoke(beanInstance, SpringContextUtils.applicationContext);
+            method.invoke(beanInstance, SpringUtil.getApplicationContext());
         } catch (Exception e) {
             log.error("setApplicationContext err", e);
         } finally {

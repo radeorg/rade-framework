@@ -11,7 +11,7 @@ import java.sql.SQLException;
 /**
  * 获取数据库方言
  */
-public class DatabaseDialectUtils {
+public class DatabaseDialectUtil {
     private static String dialect;
 
     public static String getDatabaseDialect() {
@@ -23,7 +23,7 @@ public class DatabaseDialectUtils {
 
     private static String determineDatabaseType() {
         // 从 DataSource 获取连接
-        DataSource dataSource = SpringContextUtils.getBean(DataSource.class);
+        DataSource dataSource = SpringUtil.getBean(DataSource.class);
         try (Connection connection = dataSource.getConnection()) {
             // 获取元数据
             DatabaseMetaData metaData = connection.getMetaData();

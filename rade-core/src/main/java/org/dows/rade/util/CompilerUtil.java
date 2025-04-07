@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Slf4j
-public class CompilerUtils {
+public class CompilerUtil {
 
     public final static String META_INF_VERSIONS = "META-INF/versions/";
 
@@ -80,7 +80,7 @@ public class CompilerUtils {
 
     public static String createModule(String modulesPath, String module) {
         String pathStr = modulesPath + File.separator + module;
-        PathUtils.noExistsMk(pathStr);
+        PathUtil.noExistsMk(pathStr);
         return pathStr;
     }
 
@@ -136,7 +136,7 @@ public class CompilerUtils {
                 System.out.println("Compilation and annotation processing completed successfully.");
                 // 指定源文件夹和目标文件夹
                 File sourceDir = new File("com");
-                File destinationDir = new File(PathUtils.getTargetGeneratedAnnotations());
+                File destinationDir = new File(PathUtil.getTargetGeneratedAnnotations());
                 // 确保目标文件夹存在
                 destinationDir.mkdirs();
                 // 移动源文件夹内容到目标文件夹
