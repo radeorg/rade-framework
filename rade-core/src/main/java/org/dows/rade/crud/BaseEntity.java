@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 //@Getter
 //@Setter
+
 public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements Serializable {
 
     @Ignore
@@ -31,6 +32,15 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
     @Getter
     @Setter
     private QueryWrapper queryWrapper;
+
+
+    public String getAppId() {
+        return null;
+    }
+
+    public void setAppId(String appId) {
+        //return (T) this;
+    }
 
     /*@Column(onInsertValue = "now()")
     @ColumnDefine(comment = "创建时间")

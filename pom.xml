@@ -17,9 +17,9 @@
     <modules>
         <module>rade-core</module>
         <module>rade-api</module>
-        <module>rade-dbo</module>
+        <!--<module>rade-dbo</module>
         <module>rade-mgc</module>
-        <module>rade-feign</module>
+        <module>rade-feign</module>-->
     </modules>
 
 

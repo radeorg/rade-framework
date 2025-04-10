@@ -4,10 +4,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.dows.rade.crud.BaseEntity;
 
-import java.util.*;
+import java.util.Date;
 
 /**
  * 文件
@@ -19,7 +18,6 @@ import java.util.*;
 @Data
 @ToString
 @Builder
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
-import lombok.experimental.Accessors;
 import org.dows.rade.crud.BaseEntity;
 
 import java.util.Date;
@@ -16,11 +15,11 @@ import java.util.Date;
  * @email lait.zhang@gmail.com
  * @since 2024年12月23日 下午4:11:03
  */
+@EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("serial")
 @Data
 @ToString
 @Builder
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

@@ -19,7 +19,6 @@ import java.util.*;
 @Data
 @ToString
 @Builder
-@Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
