@@ -11,15 +11,15 @@ import java.util.Map;
 public class ColumnHandler {
 
     // 数据库连接信息
-    private static final String DB_URL = "jdbc:mysql://115.159.24.40:13306/rade?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8";
+    private static final String DB_URL = "jdbc:mysql://115.159.24.40:13306/bole?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2b8";
     private static final String USER = "root";
     private static final String PASS = "radeorg123!";
 
     public static void main(String[] args) {
         Map<String, String> columns = Map.of("owner_id", "BIGINT(20)", "ut", "DATETIME");
 
-        addColumns("rade", columns,false);
-        dropColumns("rade", columns,false);
+        addColumns("bole", columns,false);
+        dropColumns("bole", columns,false);
     }
 
 
@@ -47,6 +47,9 @@ public class ColumnHandler {
             // 遍历每张表并添加新字段
             while (rs.next()) {
                 String tableName = rs.getString(1);
+                if(tableName.contains("test")){
+                    continue;
+                }
                 List<String> columns = getColumns(conn, schemaName, tableName);
                 columnsToAdd.forEach((columnName, columnType) -> {
                     if (!columns.contains(columnName)) {
@@ -89,6 +92,9 @@ public class ColumnHandler {
             // 遍历每张表并添加新字段
             while (rs.next()) {
                 String tableName = rs.getString(1);
+                if(tableName.contains("test")){
+                    continue;
+                }
                 List<String> columns = getColumns(conn, schemaName, tableName);
                 columnsToDrop.forEach((columnName, columnType) -> {
                     if (!columns.contains(columnName)) {

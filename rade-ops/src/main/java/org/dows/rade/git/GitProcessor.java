@@ -24,12 +24,16 @@ public class GitProcessor {
         SshFactory.init(null);
         List<ProjectInfo> projects = GitProjectUtil.findGitProjectsWithNumberedFiles(rootDir);
         List<ProjectInfo> runProjects = new ArrayList<>();
-        int[] array = Arrays.stream(index).sorted().distinct().toArray();
-        for (int i : array) {
-            for (ProjectInfo project : projects) {
-                if(project.getOrder() == i){
-                    runProjects.add(project);
-                    break;
+        if(index.length == 0){
+            runProjects = projects;
+        } else {
+            int[] array = Arrays.stream(index).sorted().distinct().toArray();
+            for (int i : array) {
+                for (ProjectInfo project : projects) {
+                    if (project.getOrder() == i) {
+                        runProjects.add(project);
+                        break;
+                    }
                 }
             }
         }
