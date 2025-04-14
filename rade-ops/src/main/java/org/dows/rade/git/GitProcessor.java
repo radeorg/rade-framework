@@ -11,21 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class GitProcessor {
-
-
-    private Map<String, GitCmd> gitCmdMap;
-
-    public static void main(String[] args) {
-        //SshFactory.init(null);
-        File projectDir = new File("D:/workspaces/java/projects/rade");
-        //
-        //processProjects(projectDir, 1234, 1, 2);
-        processProjects(projectDir, 0,5,3,1);
-    }
 
     /**
      * @param rootDir
