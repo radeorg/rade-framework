@@ -16,20 +16,30 @@ public class ColumnHandler {
     private static final String PASS = "radeorg123!";
 
     public static void main(String[] args) {
+        Map<String, String> columns = Map.of("owner_id", "BIGINT(20)", "ut", "DATETIME");
 
+        addColumns("rade", columns,false);
+        dropColumns("rade", columns,false);
     }
 
 
+    public static Connection getConnection() throws SQLException {
+        // 注册JDBC驱动
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        // 打开连接
+        return DriverManager.getConnection(DB_URL, USER, PASS);
+    }
 
-    public static void addColumns(String schemaName, Map<String,String> columnsToAdd) {
+
+    public static void addColumns(String schemaName, Map<String,String> columnsToAdd, boolean b) {
         Connection conn = null;
         Statement stmt = null;
         try {
-            // 注册JDBC驱动
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            // 打开连接
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
+            conn = getConnection();
             // 获取所有表名
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SHOW TABLES");
@@ -37,7 +47,7 @@ public class ColumnHandler {
             // 遍历每张表并添加新字段
             while (rs.next()) {
                 String tableName = rs.getString(1);
-                List<String> columns = getColumns(conn, "rade", tableName);
+                List<String> columns = getColumns(conn, schemaName, tableName);
                 columnsToAdd.forEach((columnName, columnType) -> {
                     if (!columns.contains(columnName)) {
                         alterTableDdl.append("ALTER TABLE `%s` ADD COLUMN `%s` %s;".formatted(tableName, columnName, columnType) + "\n");
@@ -45,7 +55,53 @@ public class ColumnHandler {
                 });
             }
             String ddlSql = alterTableDdl.toString();
-            stmt.executeUpdate(ddlSql);
+            System.out.println(ddlSql);
+            if(b) {
+                stmt.executeUpdate(ddlSql);
+            }
+            // 关闭资源
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            log.error("Exception occurred", e);
+        } finally {
+            // 关闭资源
+            try {
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                log.warn("Failed to close statement or connection", se);
+            }
+        }
+    }
+
+
+    public static void dropColumns(String schemaName, Map<String, String> columnsToDrop, boolean b) {
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            conn = getConnection();
+            // 获取所有表名
+            stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SHOW TABLES");
+            StringBuilder alterTableDdl = new StringBuilder();
+            // 遍历每张表并添加新字段
+            while (rs.next()) {
+                String tableName = rs.getString(1);
+                List<String> columns = getColumns(conn, schemaName, tableName);
+                columnsToDrop.forEach((columnName, columnType) -> {
+                    if (!columns.contains(columnName)) {
+                        String sql = String.format("ALTER TABLE `%s` DROP COLUMN `%s`;", tableName, columnName);
+                        alterTableDdl.append(sql).append("\n");
+                    }
+                });
+            }
+            String ddlSql = alterTableDdl.toString();
+            System.out.println(ddlSql);
+            if(b) {
+                stmt.executeUpdate(ddlSql);
+            }
             // 关闭资源
             rs.close();
             stmt.close();
