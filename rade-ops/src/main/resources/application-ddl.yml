@@ -1,0 +1,59 @@
+dows:
+  ddl:
+    - database: dows
+      username: root
+      password: root
+      url: jdbc:mysql://localhost:3306?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      tables:
+        - table: user
+          columns:
+            - column: id
+              type: int(10)
+              constraints:
+                primaryKey: true
+                autoIncrement: true
+                notNull: true
+                unique: true
+                defaultValue: 0
+                comment: 用户ID
+                index: true
+                seq: 1
+                indexType: BTREE
+            - column: name
+              type: varchar(50)
+              constraints:
+                notNull: true
+                unique: true
+                comment: 用户名
+                index: true
+                seq: 2
+                indexType: BTREE
+            - column: password
+              type: varchar(50)
+              constraints:
+                notNull: true
+                comment: 密码
+                index: true
+                seq: 3
+                indexType: BTREE
+            - column: email
+              type: varchar(50)
+              constraints:
+                notNull: true
+                unique: true
+                comment: 邮箱
+                index: true
+                seq: 4
+                indexType: BTREE
+            - column: phone
+              type: varchar(20)
+              constraints:
+                notNull: true
+                unique: true
+                comment: 手机号
+                index: true
+                seq: 5
+                indexType: BTREE
+

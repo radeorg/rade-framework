@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: ops
+    appId: 1
+
+  profiles:
+    include: ddl
+    active: sit
+
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      #location:
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+
+  # Web设置
+  web:
+    resources:
+      add-mappings: true
+      static-locations: classpath:/static/,file:./assets/public/
