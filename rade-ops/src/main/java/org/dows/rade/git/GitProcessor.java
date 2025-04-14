@@ -8,6 +8,8 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +24,7 @@ public class GitProcessor {
         File projectDir = new File("D:/workspaces/java/projects/rade");
         //
         //processProjects(projectDir, 1234, 1, 2);
-        processProjects(projectDir, 0);
+        processProjects(projectDir, 0,5,3,1);
     }
 
     /**
@@ -33,18 +35,25 @@ public class GitProcessor {
     public static void processProjects(File rootDir, int commond, int... index) {
         SshFactory.init(null);
         List<ProjectInfo> projects = GitProjectUtil.findGitProjectsWithNumberedFiles(rootDir);
-        for (int i : index) {
-            projects.remove(i);
+        List<ProjectInfo> runProjects = new ArrayList<>();
+        int[] array = Arrays.stream(index).sorted().distinct().toArray();
+        for (int i : array) {
+            for (ProjectInfo project : projects) {
+                if(project.getOrder() == i){
+                    runProjects.add(project);
+                    break;
+                }
+            }
         }
-        if (projects.isEmpty()) {
+        if (runProjects.isEmpty()) {
             System.out.println("未找到任何包含数字.txt文件的Git项目");
             return;
         }
         System.out.println("找到 " + projects.size() + " 个项目需要处理:");
-        projects.forEach(p -> System.out.println(p.getOrder() + ". " + p.getProjectDir().getName() +
+        runProjects.forEach(p -> System.out.println(p.getOrder() + ". " + p.getProjectDir().getName() +
                 " (等待: " + p.getDelaySeconds() + "秒)"));
 
-        for (ProjectInfo project : projects) {
+        for (ProjectInfo project : runProjects) {
             System.out.println("\n=====================================");
             System.out.println("正在处理项目[" + project.getOrder() + "]: " + project.getProjectDir().getName());
             System.out.println("等待时间: " + project.getDelaySeconds() + " 秒");
