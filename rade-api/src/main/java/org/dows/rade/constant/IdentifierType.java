@@ -34,4 +34,14 @@ public enum IdentifierType {
         this.channel = channel;
         this.description = description;
     }
+
+    // 新增方法：根据type获取对应的枚举
+    public static IdentifierType getByIdentifierType(int type) {
+        for (IdentifierType identifierType : IdentifierType.values()) {
+            if (identifierType.getType() == type) {
+                return identifierType;
+            }
+        }
+        throw new IllegalArgumentException("Invalid type: " + type);
+    }
 }
