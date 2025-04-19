@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.status.CommonStatusCode;
 import org.dows.rade.status.ResponseStatusCode;
+import org.dows.rade.status.StatusCode;
 import org.dows.rade.web.Response;
 import org.dows.rade.web.UnifiedMessageSource;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -252,8 +253,13 @@ public abstract class RadeExceptionHandler {
      */
     public String getMessage(RadeException e) {
         String message = "";
+
         if (null != e.getCode()) {
-            String code = "response." + e.getStatusCode().toString();
+            StatusCode statusCode = e.getStatusCode();
+            if (null == statusCode) {
+                statusCode = CommonStatusCode.FAILED;
+            }
+            String code = "response." + statusCode.getCode();
             message = unifiedMessageSource.getMessage(code, e.getArgs());
         }
 
