@@ -226,12 +226,12 @@ public abstract class RadeExceptionHandler {
         log.error("调用={}服务出现异常了，请求的url是={}，请求的方法是={}，原因={}",
                 serviceName, request.getRequestURL(), request.getMethod(), e.getMessage(), e);
 
-        if (isAjax(request)) {
+        if (isJsonRequest(request)) {
             if (ENV_PRD.equals(profile)) {
                 // 当为生产环境, 不适合把具体的异常信息展示给用户, 比如数据库异常信息.
-                RadeException RadeException = new RadeException(CommonStatusCode.SERVER_ERROR);
-                String message = getMessage(RadeException);
-                return Response.failed(CommonStatusCode.SERVER_ERROR);
+                /*RadeException RadeException = new RadeException(CommonStatusCode.SERVER_EXCEPTION);
+                String message = getMessage(RadeException);*/
+                return Response.failed(CommonStatusCode.SERVER_EXCEPTION);
             }
             return Response.failed(e.getMessage());
         } else {
@@ -356,7 +356,16 @@ public abstract class RadeExceptionHandler {
         return Response.failed(e.getMessage());
     }
 
-
+    /**
+     * 判断是否为 JSON 格式的请求
+     *
+     * @param httpRequest 请求对象
+     * @return 如果是 JSON 请求返回 true，否则返回 false
+     */
+    public static boolean isJsonRequest(HttpServletRequest httpRequest) {
+        String contentType = httpRequest.getContentType();
+        return contentType != null && contentType.contains("application/json");
+    }
     /**
      * 判断是否ajax请求
      *

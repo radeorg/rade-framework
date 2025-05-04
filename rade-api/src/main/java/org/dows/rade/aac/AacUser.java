@@ -10,9 +10,10 @@ public interface AacUser {
 
     // 用户ID
     Long getUserId();
-
+    // 所在组织根节点ID
     Long getOrgRootId();
-
+    // 所在组织节点ID
+    Long getOrgTreeId();
     // 角色集ID
     List<Long> getRoleIds();
     //void setRoleIds(List<Long> roleIds);

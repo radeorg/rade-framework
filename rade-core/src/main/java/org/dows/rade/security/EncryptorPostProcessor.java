@@ -35,8 +35,7 @@ public class EncryptorPostProcessor implements EnvironmentPostProcessor {
         Map<String, Object> decryptedProperties = new HashMap<>();
         // 遍历所有 PropertySource
         for (PropertySource<?> propertySource : environment.getPropertySources()) {
-            if (propertySource instanceof MapPropertySource) {
-                MapPropertySource mapPropertySource = (MapPropertySource) propertySource;
+            if (propertySource instanceof MapPropertySource mapPropertySource) {
                 // 遍历当前 PropertySource 中的所有属性
                 for (String propertyName : mapPropertySource.getPropertyNames()) {
                     Object propertyValue = mapPropertySource.getProperty(propertyName);

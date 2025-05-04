@@ -15,6 +15,8 @@ public enum CommonStatusCode implements StatusCode {
      */
     SERVER_ERROR(9999, "网络异常"),
 
+    SERVER_EXCEPTION(500,"服务异常"),
+
 
     /**
      * 成功
