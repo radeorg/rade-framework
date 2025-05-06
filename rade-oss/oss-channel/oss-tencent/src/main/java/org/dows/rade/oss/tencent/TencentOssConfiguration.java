@@ -66,7 +66,7 @@ public class TencentOssConfiguration implements BeanPostProcessor {
         Region region = region(tencentOssConfig);
         ClientConfig clientConfig = config(region);
         clientConfig.setEndpointBuilder(new SelfDefinedEndpointBuilder(tencentOssConfig));
-        clientConfig.setHttpProtocol(HttpProtocol.http);
+        clientConfig.setHttpProtocol(HttpProtocol.https);
         COSCredentials cosCredentials = cosCredentials(tencentOssConfig);
         COSClient cosClient = cosClient(cosCredentials, clientConfig);
         return tencentOssClient(cosClient, tencentOssConfig);

@@ -54,12 +54,15 @@ public class TencentOssClient implements S3OssClient {
                 PutObjectResult putObjectResult = cosClient.putObject(bucketName, key, file);
                 OssInfo ossInfo = getInfo(targetName);
                 ossInfo.setMd5(putObjectResult.getContentMd5());
+                ossInfo.setFilePath(key);
                 return ossInfo;
             } else {
                 throw new OssException("文件不存在");
             }
         }
-        return getInfo(targetName);
+        OssInfo info = getInfo(targetName);
+        info.setFilePath(key);
+        return info;
     }
 
 
@@ -238,6 +241,7 @@ public class TencentOssClient implements S3OssClient {
         ossInfo.setName(StrUtil.equals(targetName, StrUtil.SLASH) ? targetName : FileNameUtil.getName(targetName));
         ossInfo.setPath(replaceKey(targetName, ossInfo.getName(), true));
         ossInfo.setFileLink(cosClient.getObjectUrl(getBucket(), key).toString());
+       // ossInfo.setFilePath();
 
         if (isRecursion && isDirectory(key)) {
             String prefix = convertPath(key, false);

@@ -65,7 +65,8 @@ public class AesEncryptor {
         config.setAlgorithm(ALGORITHM);
         config.setSecretKey(SECRET_KEY);
 
-        String plainText = "sk-94c1bcf6ea9c434c8b13939fbfc770c9";
+        //String plainText = "AKID8XyHOTZeYDmBKEDA5usojaUGzb2FDxSu";
+        String plainText = "KQHuIR8uTo8JJ6g1885pLoG5sVv7PYaR";
         String encryptedText = processor.encrypt(plainText, config);
         System.out.println("Encrypted Text: " + encryptedText);
         System.out.println(processor.decrypt(encryptedText, config));

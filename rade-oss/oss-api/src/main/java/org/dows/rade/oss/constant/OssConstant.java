@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 public class OssConstant {
 
-    public static final String OSS = "oss";
+    public static final String OSS = "rade.oss";
     public static final String ENABLE = "enable";
     public static final String DEFAULT_ENABLE_VALUE = "true";
 

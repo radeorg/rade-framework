@@ -43,7 +43,7 @@ public class RadeAid {
     final private RequestMappingHandlerMapping requestMappingHandlerMapping;
     public Dict admin;
     public Dict app;
-    @Value("${server.port}")
+    @Value("${server.port:8080}")
     private int serverPort;
     private Dict entityInfo;
     private JSONObject swaggerInfo;
