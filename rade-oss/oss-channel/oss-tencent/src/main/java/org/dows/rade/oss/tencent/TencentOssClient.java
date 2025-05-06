@@ -12,6 +12,7 @@ import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.ReflectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.qcloud.cos.COSClient;
+import com.qcloud.cos.http.HttpMethodName;
 import com.qcloud.cos.model.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -314,6 +316,17 @@ public class TencentOssClient implements S3OssClient {
             ossInfo = new DirectoryOssInfo();
         }
         return ossInfo;
+    }
+
+    @Override
+    public String presignedViewUrl(String objectKey, Long second) {
+        objectKey = objectKey.startsWith("/") ? objectKey.substring(1) : objectKey;
+        GeneratePresignedUrlRequest generatePresignedUrlRequest =
+                new GeneratePresignedUrlRequest(getBucket(), objectKey)
+                        .withMethod(HttpMethodName.GET)
+                        .withExpiration(new Date(System.currentTimeMillis() + 1000L * second));
+        URL url = cosClient.generatePresignedUrl(generatePresignedUrlRequest);
+        return url.toString().trim();
     }
 
 }
