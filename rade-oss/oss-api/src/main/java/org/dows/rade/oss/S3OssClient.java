@@ -617,4 +617,15 @@ public interface S3OssClient {
      */
     String getBasePath();
 
+    /**
+     * 获取预签名get链接(预览、下载)
+     *
+     * @param objectKey 全路径文件信息(不要bucket部分)
+     * @param second    秒
+     * @return url
+     */
+    default String presignedViewUrl(String objectKey, Long second) {
+        return null;
+    }
+
 }
