@@ -83,6 +83,7 @@ public class TencentOssClient implements S3OssClient {
             }
             PutObjectResult putObjectResult = cosClient.putObject(bucketName, key, is, objectMetadata);
             OssInfo ossInfo = getInfo(targetName);
+            ossInfo.setFilePath(key);
             ossInfo.setMd5(putObjectResult.getContentMd5());
             return ossInfo;
         }
