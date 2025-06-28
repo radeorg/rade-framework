@@ -15,7 +15,8 @@ import java.util.Map;
 public class NonStandardJsonToJava {
 
     public static void main(String[] args) {
-        String nonStandardJson = "amout:{p1:string,p2:integer,p3:{p4:string,p5:long}}";
+        String nonStandardJson = "?in=amout:{p1:string,p2:integer,p3:{p4:string,p5:long}}";
+        String nonStandardJson1 = "amout:{p1:string,p2:integer,p3:{p4:string,p5:long}}";
         Map<String, Object> dataModel = parseNonStandardJson(nonStandardJson);
 
         try {

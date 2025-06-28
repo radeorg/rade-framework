@@ -24,14 +24,14 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
     @Ignore
     @Column(ignore = true)
     @JsonIgnore
-    private static Map<Class<?>, Field> tableIdFields = new ConcurrentHashMap<>();
+    protected static Map<Class<?>, Field> tableIdFields = new ConcurrentHashMap<>();
 
     @Ignore
     @Column(ignore = true)
     @JsonIgnore
     @Getter
     @Setter
-    private QueryWrapper queryWrapper;
+    protected QueryWrapper queryWrapper;
 
 
     public String getAppId() {
@@ -39,7 +39,6 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
     }
 
     public void setAppId(String appId) {
-        //return (T) this;
     }
 
     /*@Column(onInsertValue = "now()")
@@ -62,6 +61,7 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
                 tableIdFields.put(this.getClass(), field);
             }
             assert idField != null;
+            idField.setAccessible(true);
             return (Long) idField.get(this);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -69,7 +69,23 @@ public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
-
+    public void setId(Long id) {
+        try {
+            Field idField = tableIdFields.get(this.getClass());
+            if (idField == null) {
+                String entityName = this.getClass().getSimpleName().replace("Entity", "Id");
+                entityName = entityName.substring(0, 1).toLowerCase() + entityName.substring(1);
+                Field field = this.getClass().getField(entityName);
+                tableIdFields.put(this.getClass(), field);
+            }
+            assert idField != null;
+            idField.setAccessible(true);
+            idField.set(this, id);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        //throw new UnsupportedOperationException("Not supported yet.");
+    }
 
 
 }
