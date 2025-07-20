@@ -27,7 +27,7 @@ public class AppContextSetupFilter implements Filter {
     private Map<String, Pattern[]> WHITELIST_PATTERN_MAP = new ConcurrentHashMap<>();
     //    private String[] whitelist;
     private static final Pattern USER_SPACE_PATH_PATTERN = Pattern.compile("^/([^/]+)(.*)$");
-    private AacContext aacContext;
+    private final AacContext aacContext;
 
     /*@Override
     public void init(FilterConfig filterConfig) throws ServletException {
