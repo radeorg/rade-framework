@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
 @Order(Ordered.HIGHEST_PRECEDENCE) // 设置高优先级
 public class AppContextSetupFilter implements Filter {
     // 改为Pattern数组用于高效匹配
-    private Map<String, Pattern[]> WHITELIST_PATTERN_MAP = new ConcurrentHashMap<>();
-    //    private String[] whitelist;
     private static final Pattern USER_SPACE_PATH_PATTERN = Pattern.compile("^/([^/]+)(.*)$");
+    // todo 后期量大改用redis缓存或caffine
+    private final Map<String, Pattern[]> WHITELIST_PATTERN_MAP = new ConcurrentHashMap<>();
     private final AacContext aacContext;
 
     /*@Override
@@ -54,7 +54,7 @@ public class AppContextSetupFilter implements Filter {
 
     private String modifyURI(String originalURI) {
         String substring = originalURI.substring(1);
-        originalURI = substring.substring(0,substring.indexOf("/"));
+        originalURI = substring.substring(0, substring.indexOf("/"));
         return originalURI;
     }
 
@@ -70,7 +70,7 @@ public class AppContextSetupFilter implements Filter {
                 if (matcher.matches()) {
                     String namespace = matcher.group(1);
                     String newURI = modifyURI(requestURI);
-                    UriRequestWrapper uriWrapperRequest = new UriRequestWrapper(httpServletRequest,newURI);
+                    UriRequestWrapper uriWrapperRequest = new UriRequestWrapper(httpServletRequest, newURI);
                     appId = aacContext.getAppIdByNamespace(namespace);
                     // 设置appId到ThreadLocal
                     AppContext.setAppId(appId);
