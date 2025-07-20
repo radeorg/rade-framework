@@ -72,6 +72,9 @@ public class AppContextSetupFilter implements Filter {
                     String newURI = modifyURI(requestURI);
                     UriRequestWrapper uriWrapperRequest = new UriRequestWrapper(httpServletRequest, newURI);
                     appId = aacContext.getAppIdByNamespace(namespace);
+                    if (appId == null || appId.isBlank()) {
+                        throw new RadeException("appId不能为空");
+                    }
                     // 设置appId到ThreadLocal
                     AppContext.setAppId(appId);
                     // 白名单匹配逻辑：使用正则表达式进行匹配
@@ -86,10 +89,15 @@ public class AppContextSetupFilter implements Filter {
                                 return;
                             }
                         }
+                    } else {
+                        chain.doFilter(uriWrapperRequest, response);
                     }
                 } else {
                     // 从请求头或参数获取appId
                     appId = httpServletRequest.getHeader("AppId");
+                    if (appId == null || appId.isBlank()) {
+                        throw new RadeException("appId不能为空");
+                    }
                     // 设置appId到ThreadLocal
                     AppContext.setAppId(appId);
                     String[] whitelist = aacContext.getWhitelist(appId);
@@ -102,11 +110,8 @@ public class AppContextSetupFilter implements Filter {
                             }
                         }
                     }
+                    chain.doFilter(request, response);
                 }
-                if (appId == null || appId.isBlank()) {
-                    throw new RadeException("appId不能为空");
-                }
-                chain.doFilter(request, response);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
