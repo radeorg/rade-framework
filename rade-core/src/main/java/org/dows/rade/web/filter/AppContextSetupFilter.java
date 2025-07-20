@@ -1,5 +1,6 @@
 package org.dows.rade.web.filter;
 
+import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
@@ -15,7 +16,6 @@ import org.springframework.core.annotation.Order;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Data
@@ -52,39 +52,35 @@ public class AppContextSetupFilter implements Filter {
         }
     }
 
-    private String modifyURI(String originalURI) {
-        String substring = originalURI.substring(1);
-        originalURI = substring.substring(substring.indexOf("/"));
-        return originalURI;
-    }
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
         try {
             if (request instanceof HttpServletRequest httpServletRequest) {
-                //
+                //获取uri,如: //http://dev.bole.com/dd/cc/fff -> /dd/cc/fff
                 String requestURI = httpServletRequest.getRequestURI();
-                Matcher matcher = USER_SPACE_PATH_PATTERN.matcher(requestURI);
-                String appId;
-                if (matcher.matches()) {
-                    String namespace = matcher.group(1);
-                    String newURI = modifyURI(requestURI);
-                    UriRequestWrapper uriWrapperRequest = new UriRequestWrapper(httpServletRequest, newURI);
-                    appId = aacContext.getAppIdByNamespace(namespace);
-                    if (appId == null || appId.isBlank()) {
-                        throw new RadeException("appId不能为空");
-                    }
+                if(StrUtil.isBlank(requestURI)){
+                    chain.doFilter(request, response);
+                }
+                // /dd/cc/fff ->dd/cc/fff
+                String substring = requestURI.substring(1);
+                //  dd/cc/fff->dd
+                String namespace = substring.substring(0, substring.indexOf("/"));
+                // 根据namespace获取appId ,如果appId 存在，说明组织空间存在
+                String appId = aacContext.getAppIdByNamespace(namespace);
+                if (StrUtil.isNotBlank(appId)) {
                     // 设置appId到ThreadLocal
                     AppContext.setAppId(appId);
+                    // dd/cc/fff->/cc/ff
+                    String uri = substring.substring(namespace.length());
+                    UriRequestWrapper uriWrapperRequest = new UriRequestWrapper(httpServletRequest, uri);
                     // 白名单匹配逻辑：使用正则表达式进行匹配
                     Pattern[] whitelistPatterns = WHITELIST_PATTERN_MAP.get(appId);
                     if (whitelistPatterns != null) {
-                        // http://dev.bole.com/dd/cc/fff -> /cc/fff
-                        String path = requestURI.substring(namespace.length() + 1);
+                        //String path = requestURI.substring(namespace.length() + 1);
                         for (Pattern pattern : whitelistPatterns) {
                             // 剔除组织空间路径
-                            if (pattern.matcher(path).matches()) {
+                            if (pattern.matcher(uri).matches()) {
                                 chain.doFilter(uriWrapperRequest, response);
                                 return;
                             }
