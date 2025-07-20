@@ -89,9 +89,8 @@ public class AppContextSetupFilter implements Filter {
                                 return;
                             }
                         }
-                    } else {
-                        chain.doFilter(uriWrapperRequest, response);
                     }
+                    chain.doFilter(uriWrapperRequest, response);
                 } else {
                     // 从请求头或参数获取appId
                     appId = httpServletRequest.getHeader("AppId");
