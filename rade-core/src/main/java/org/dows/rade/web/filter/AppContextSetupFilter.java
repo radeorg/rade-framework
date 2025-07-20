@@ -54,7 +54,7 @@ public class AppContextSetupFilter implements Filter {
 
     private String modifyURI(String originalURI) {
         String substring = originalURI.substring(1);
-        originalURI = substring.substring(0, substring.indexOf("/"));
+        originalURI = substring.substring(substring.indexOf("/"));
         return originalURI;
     }
 
@@ -89,9 +89,8 @@ public class AppContextSetupFilter implements Filter {
                                 return;
                             }
                         }
-                    } else {
-                        chain.doFilter(uriWrapperRequest, response);
                     }
+                    chain.doFilter(uriWrapperRequest, response);
                 } else {
                     // 从请求头或参数获取appId
                     appId = httpServletRequest.getHeader("AppId");
