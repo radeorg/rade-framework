@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.aac.AacContext;
 import org.dows.rade.context.AppContext;
 import org.dows.rade.exception.RadeException;
+import org.dows.rade.web.UriRequestWrapper;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
@@ -51,6 +52,12 @@ public class AppContextSetupFilter implements Filter {
         }
     }
 
+    private String modifyURI(String originalURI) {
+        String substring = originalURI.substring(1);
+        originalURI = substring.substring(0,substring.indexOf("/"));
+        return originalURI;
+    }
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -62,6 +69,8 @@ public class AppContextSetupFilter implements Filter {
                 String appId;
                 if (matcher.matches()) {
                     String namespace = matcher.group(1);
+                    String newURI = modifyURI(requestURI);
+                    UriRequestWrapper uriWrapperRequest = new UriRequestWrapper(httpServletRequest,newURI);
                     appId = aacContext.getAppIdByNamespace(namespace);
                     // 设置appId到ThreadLocal
                     AppContext.setAppId(appId);
@@ -73,7 +82,7 @@ public class AppContextSetupFilter implements Filter {
                         for (Pattern pattern : whitelistPatterns) {
                             // 剔除组织空间路径
                             if (pattern.matcher(path).matches()) {
-                                chain.doFilter(request, response);
+                                chain.doFilter(uriWrapperRequest, response);
                                 return;
                             }
                         }
