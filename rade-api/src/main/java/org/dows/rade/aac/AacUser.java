@@ -14,6 +14,10 @@ public interface AacUser {
     Long getOrgRootId();
     // 所在组织节点ID
     Long getOrgTreeId();
+    // 应用ID
+    String getAppId();
+    // 组织空间名称
+    String getNameSpace();
     // 角色集ID
     List<Long> getRoleIds();
     //void setRoleIds(List<Long> roleIds);
