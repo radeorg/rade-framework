@@ -153,7 +153,7 @@ public class BaseTreeHandler<T extends BaseTreeEntity<?>, S extends BaseService<
      * @return 子节点列表
      */
     public List<T> getChildrenNode(Long parentId) {
-        QueryWrapper query = QueryWrapper.create().eq("pid", parentId);
+        QueryWrapper query = QueryWrapper.create().eq("pid", parentId).orderBy("seq");
         return baseService.list(query);
     }
 

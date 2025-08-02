@@ -12,7 +12,6 @@ import java.io.Serializable;
  */
 public abstract class BaseTreeEntity<T extends Model<T>> extends BaseEntity<T> implements Serializable {
 
-
     @Getter
     @Setter
     @Column(value = "name")
@@ -27,7 +26,6 @@ public abstract class BaseTreeEntity<T extends Model<T>> extends BaseEntity<T> i
     @Setter
     @Column(value = "pid")
     private Long pid;
-
 
     @Getter
     @Setter
@@ -44,4 +42,8 @@ public abstract class BaseTreeEntity<T extends Model<T>> extends BaseEntity<T> i
     @Column(value = "level")
     private Integer level;
 
+    @Getter
+    @Setter
+    @Column(value = "seq")
+    private Integer seq;
 }
