@@ -244,7 +244,7 @@ public class TencentOssClient implements S3OssClient {
         ossInfo.setName(StrUtil.equals(targetName, StrUtil.SLASH) ? targetName : FileNameUtil.getName(targetName));
         ossInfo.setPath(replaceKey(targetName, ossInfo.getName(), true));
         ossInfo.setFileLink(cosClient.getObjectUrl(getBucket(), key).toString());
-       // ossInfo.setFilePath();
+        ossInfo.setFilePath(key);
 
         if (isRecursion && isDirectory(key)) {
             String prefix = convertPath(key, false);
