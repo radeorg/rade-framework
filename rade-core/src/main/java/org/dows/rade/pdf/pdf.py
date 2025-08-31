@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-在原有逻辑上，每页开头或结尾出现“连续 3 行及以上相同内容（允许夹杂极短行）”即整组剔除
-"""
+
 import fitz, math, re, json, sys, requests
 from typing import List, Optional
 
@@ -54,7 +52,7 @@ def strip_head_tail_garbage(lines: List[str]) -> List[str]:
     lines = _strip_once(lines, reverse=False)   # 页首
     lines = _strip_once(lines, reverse=True)    # 页尾
     return lines
-# -----------------------------------------
+
 
 def extract_clean_text(
     pdf_source: str,
