@@ -11,20 +11,20 @@ import org.dows.rade.context.AppContext;
 public class FieldFillListener implements InsertListener, UpdateListener {
     @Override
     public void onInsert(Object entity) {
-        if (entity instanceof BaseEntity baseEntity) {
-            if (baseEntity.getAppId() == null || baseEntity.getAppId().isBlank()) {
-                baseEntity.setAppId(AppContext.getAppId());
-            }
-        }
+//        if (entity instanceof BaseEntity baseEntity) {
+//            if (baseEntity.getAppId() == null || baseEntity.getAppId().isBlank()) {
+//                baseEntity.setAppId(AppContext.getAppId());
+//            }
+//        }
     }
 
     @Override
     public void onUpdate(Object entity) {
-        if (entity instanceof BaseEntity baseEntity) {
-            if (baseEntity.getAppId() == null || baseEntity.getAppId().isBlank()) {
-                baseEntity.setAppId(AppContext.getAppId());
-            }
-        }
+//        if (entity instanceof BaseEntity baseEntity) {
+//            if (baseEntity.getAppId() == null || baseEntity.getAppId().isBlank()) {
+//                baseEntity.setAppId(AppContext.getAppId());
+//            }
+//        }
     }
 
     /*private String getCurrentAppId() {
