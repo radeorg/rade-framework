@@ -87,7 +87,10 @@ public class AppContextSetupFilter implements Filter {
                         }
                     }
                     chain.doFilter(uriWrapperRequest, response);
-                } else {
+                } else if (requestURI.contains("v1/ali/pay/notify") || requestURI.contains("v1/wx/pay/notify")) {
+                    AppContext.setAppId(appId);
+                    chain.doFilter(request, response);
+                }else {
                     // 从请求头或参数获取appId
                     appId = httpServletRequest.getHeader("AppId");
                     if (appId == null || appId.isBlank()) {
