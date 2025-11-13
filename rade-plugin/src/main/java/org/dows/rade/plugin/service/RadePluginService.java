@@ -9,7 +9,7 @@ import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.exceptions.PersistenceException;
+//import org.apache.ibatis.exceptions.PersistenceException;
 import org.dows.rade.exception.RadeException;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.plugin.*;
@@ -110,7 +110,7 @@ public class RadePluginService {
             savePluginInfo(pluginJson, jarFilePath, jarFile, force);
             // 把 ApplicationContext 对象传递打插件类中，使其在插件中也能正常使用spring bean对象
             RadePluginInvokers.setApplicationContext(pluginJson.getKey());
-        } catch (PersistenceException persistenceException) {
+        }/* catch (PersistenceException persistenceException) {
             extractedAfterErr(jarFile, key);
             if (persistenceException.getMessage().contains("Duplicate entry")) {
                 // 唯一键冲突
@@ -119,7 +119,7 @@ public class RadePluginService {
             }
 
             RadePreconditions.alwaysThrow(persistenceException.getMessage());
-        } catch (RadeException e) {
+        }*/ catch (RadeException e) {
             extractedAfterErr(jarFile, key);
             throw e;
         } catch (Exception e) {

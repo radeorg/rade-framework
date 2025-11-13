@@ -1,7 +1,7 @@
 package org.dows.rade.plugin.upload;
 
 import lombok.Data;
-import org.dows.rade.config.FileModeEnum;
+import org.dows.rade.enums.FileModeEnum;
 
 /**
  * 上传模式类型

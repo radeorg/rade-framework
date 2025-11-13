@@ -1,4 +1,4 @@
-//package org.dows.rade.crud;
+package org.dows.rade.crud;//package org.dows.rade.crud;
 //
 //import com.mybatisflex.core.dialect.OperateType;
 //

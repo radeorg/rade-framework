@@ -14,6 +14,7 @@ import com.mybatisflex.core.paginate.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Getter;
+import org.dows.rade.crud.PageResult;
 import org.dows.rade.enums.QueryModeEnum;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.web.Response;

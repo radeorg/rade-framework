@@ -1,7 +1,7 @@
 package org.dows.rade.plugin.upload.strategy;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.dows.rade.config.FileModeEnum;
+import org.dows.rade.enums.FileModeEnum;
 import org.dows.rade.plugin.PluginDetail;
 import org.dows.rade.plugin.RadePluginInvokers;
 import org.springframework.web.multipart.MultipartFile;

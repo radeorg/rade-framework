@@ -1,4 +1,4 @@
-package org.dows.rade.config;
+package org.dows.rade.enums;
 
 /**
  * 文件模式

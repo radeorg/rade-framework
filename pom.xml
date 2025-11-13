@@ -19,6 +19,9 @@
         <module>rade-api</module>
         <module>rade-ops</module>
         <module>rade-oss</module>
+        <module>rade-crud</module>
+        <module>rade-config</module>
+        <module>rade-plugin</module>
         <!--<module>rade-dbo</module>
         <module>rade-mgc</module>
         <module>rade-feign</module>-->
@@ -26,7 +29,7 @@
 
 
     <properties>
-        <revision>1.0.241230-SNAPSHOT</revision>
+        <revision>1.0.251113-SNAPSHOT</revision>
         <mybatis-flex-ext.version>1.10.8.120</mybatis-flex-ext.version>
         <mybatis-flex.version>1.10.8</mybatis-flex.version>
 

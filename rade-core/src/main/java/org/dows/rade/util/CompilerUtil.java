@@ -1,7 +1,7 @@
 package org.dows.rade.util;
 
 import cn.hutool.core.io.FileUtil;
-import com.mybatisflex.processor.MybatisFlexProcessor;
+//import com.mybatisflex.processor.MybatisFlexProcessor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.processing.Processor;
@@ -114,7 +114,7 @@ public class CompilerUtil {
             Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjects(
                     entityPath);
             // 设置注解处理器
-            Iterable<? extends Processor> processors = List.of(new MybatisFlexProcessor());
+            Iterable<? extends Processor> processors = List.of(/*new MybatisFlexProcessor()*/);
             // 添加 -proc:only 选项
             List<String> options = List.of("-proc:only");
             JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, null, options,

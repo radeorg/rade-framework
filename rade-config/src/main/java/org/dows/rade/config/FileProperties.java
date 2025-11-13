@@ -1,6 +1,8 @@
 package org.dows.rade.config;
 
 import lombok.Data;
+import org.dows.rade.enums.FileModeEnum;
+import org.dows.rade.properties.LocalFileProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.NestedConfigurationProperty;
 

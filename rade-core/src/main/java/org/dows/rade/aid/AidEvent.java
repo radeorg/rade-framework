@@ -16,11 +16,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AidEvent {
 
-    final private RadeAid radeAid;
-
-    @EventListener
-    public void onApplicationEvent(ApplicationReadyEvent event) {
-        radeAid.init();
-        log.info("构建aid信息");
-    }
+//    final private RadeAid radeAid;
+//
+//    @EventListener
+//    public void onApplicationEvent(ApplicationReadyEvent event) {
+//        radeAid.init();
+//        log.info("构建aid信息");
+//    }
 }

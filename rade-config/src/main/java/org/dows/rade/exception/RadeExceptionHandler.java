@@ -17,7 +17,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -384,11 +383,11 @@ public abstract class RadeExceptionHandler {
     }
 
 
-    @ExceptionHandler(value = {BadSqlGrammarException.class})
+/*    @ExceptionHandler(value = {BadSqlGrammarException.class})
     public Response<?> badSqlGrammarExceptionHandler(HttpServletRequest request, HttpServletResponse response, BadSqlGrammarException e) {
         log.warn("sql错误:【" + e.getMessage() + "】");
         return Response.failed("500", e.getSQLException().getMessage());
-    }
+    }*/
 
     @ExceptionHandler(value = {SQLSyntaxErrorException.class})
     public Response<?> sqlSyntaxErrorExceptionHandler(HttpServletRequest request, HttpServletResponse response, SQLSyntaxErrorException e) {

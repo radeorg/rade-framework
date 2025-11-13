@@ -6,11 +6,11 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.dows.rade.config.FileModeEnum;
-import org.dows.rade.config.LocalFileProperties;
+import org.dows.rade.enums.FileModeEnum;
 import org.dows.rade.exception.RadeException;
 import org.dows.rade.exception.RadePreconditions;
 import org.dows.rade.plugin.PluginDetail;
+import org.dows.rade.properties.LocalFileProperties;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;

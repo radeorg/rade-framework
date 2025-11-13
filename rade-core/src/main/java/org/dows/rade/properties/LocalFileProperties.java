@@ -1,4 +1,4 @@
-package org.dows.rade.config;
+package org.dows.rade.properties;
 
 import lombok.Data;
 import org.dows.rade.util.PathUtil;
