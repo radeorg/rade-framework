@@ -1,4 +1,4 @@
-package org.dows.rade.datasource;
+package org.dows.rade.database;
 
 import java.util.Properties;
 

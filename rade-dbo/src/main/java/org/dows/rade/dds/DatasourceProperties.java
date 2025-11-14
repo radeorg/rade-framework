@@ -1,8 +1,8 @@
 package org.dows.rade.dds;
 
 import lombok.Data;
-import org.dows.rade.datasource.DatasourceConfiguration;
-import org.dows.rade.datasource.Dialect;
+import org.dows.rade.database.DatasourceConfiguration;
+import org.dows.rade.database.Dialect;
 import org.dows.rade.dds.pool.PoolSettings;
 
 import java.util.Properties;

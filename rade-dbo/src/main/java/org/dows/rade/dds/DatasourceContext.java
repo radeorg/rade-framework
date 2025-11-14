@@ -7,7 +7,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import jakarta.annotation.PostConstruct;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.dows.rade.datasource.Dialect;
+import org.dows.rade.database.Dialect;
 import org.dows.rade.dds.pool.PoolSettings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
