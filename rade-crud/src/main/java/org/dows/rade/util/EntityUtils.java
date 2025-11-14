@@ -1,4 +1,4 @@
-package org.dows.rade.crud;
+package org.dows.rade.util;
 
 import cn.hutool.core.annotation.AnnotationUtil;
 import cn.hutool.core.bean.BeanUtil;

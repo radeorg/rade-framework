@@ -1,4 +1,4 @@
-package org.dows.rade.crud.service;
+package org.dows.rade.crud;
 
 import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.TypeUtil;

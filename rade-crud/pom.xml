@@ -18,13 +18,14 @@
             <artifactId>rade-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.tangzc</groupId>
             <artifactId>mybatis-flex-ext-spring-boot3-starter</artifactId>
+        </dependency>-->
+
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
         </dependency>
     </dependencies>
 

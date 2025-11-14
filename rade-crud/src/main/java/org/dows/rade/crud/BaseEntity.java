@@ -6,7 +6,6 @@ import com.mybatisflex.core.activerecord.Model;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.Getter;
 import lombok.Setter;
-import org.dromara.autotable.annotation.Ignore;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -21,12 +20,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements Serializable {
 
-    @Ignore
     @Column(ignore = true)
     @JsonIgnore
     protected static Map<Class<?>, Field> tableIdFields = new ConcurrentHashMap<>();
 
-    @Ignore
     @Column(ignore = true)
     @JsonIgnore
     @Getter
