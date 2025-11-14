@@ -20,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class BaseEntity<T extends Model<T>> extends Model<T> implements Serializable {
 
+
     @Column(ignore = true)
     @JsonIgnore
     protected static Map<Class<?>, Field> tableIdFields = new ConcurrentHashMap<>();
