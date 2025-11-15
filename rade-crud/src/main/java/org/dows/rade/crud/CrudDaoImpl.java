@@ -16,7 +16,7 @@ import java.util.List;
  * @param <M> Mapper 类
  * @param <E> 实体
  */
-public class CrudDaoImpl<E extends CrudEntity<E>, M extends BaseMapper<E>> extends ServiceImpl<M, E> implements CrudDao<E> {
+public class CrudDaoImpl<M extends BaseMapper<E>, E extends CrudEntity<E>> extends ServiceImpl<M, E> implements CrudDao<E> {
 
     @Override
     public Long add(E entity) {

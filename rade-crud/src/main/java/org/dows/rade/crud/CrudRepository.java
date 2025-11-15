@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 //public abstract class CrudRepository<E extends CrudEntity<E>, M extends CrudMapper<E>, S extends CrudDaoImpl<M, E>> {
-public abstract class CrudRepository<E extends CrudEntity<E>, D extends CrudDao<E>> {
+public abstract class CrudRepository<D extends CrudDao<E>, E extends CrudEntity<E>> {
 
     @Autowired
     private D dao;
