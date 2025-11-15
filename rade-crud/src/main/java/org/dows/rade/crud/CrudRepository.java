@@ -30,7 +30,7 @@ public abstract class CrudRepository<D extends CrudDao<E>, E extends CrudEntity<
     @PostConstruct
     public void init() {
         //  获取第1个泛型参数
-        Type type = TypeUtil.getTypeArgument(this.getClass(), 0);
+        Type type = TypeUtil.getTypeArgument(this.getClass(), 1);
         if (type instanceof Class<?>) {
             entityClass = (Class<E>) type;
         }
