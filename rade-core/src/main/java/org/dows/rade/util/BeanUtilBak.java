@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  * BeanCopier工具类（高性能优化版）
  * 优化特性：预初始化缓存、对象构造器缓存、并行集合处理、弱引用缓存等
  */
-public class BeanUtil {
+public class BeanUtilBak {
 
     // 1. 使用ConcurrentHashMap作为主缓存，提供高效的并发读写性能
     private static final Map<String, BeanCopier> BEAN_COPIER_CACHE = new ConcurrentHashMap<>(128);
@@ -120,11 +120,6 @@ public class BeanUtil {
             return null;
         }
         
-        // If source is already of the target type, cast and return directly
-        if (targetClass.isInstance(source)) {
-            return targetClass.cast(source);
-        }
-        
         T target = createTarget(targetClass);
         BeanCopier copier = getBeanCopier(source.getClass(), targetClass);
         copier.copy(source, target, null); // 无Converter
@@ -139,11 +134,6 @@ public class BeanUtil {
             return;
         }
         
-        // If source and target are of the same type, no need to copy
-        if (source.getClass().equals(target.getClass())) {
-            return;
-        }
-        
         BeanCopier copier = getBeanCopier(source.getClass(), target.getClass());
         copier.copy(source, target, null);
     }
@@ -154,11 +144,6 @@ public class BeanUtil {
     public static <T> T copy(Object source, Supplier<T> targetSupplier, Class<T> targetClass) {
         if (source == null) {
             return null;
-        }
-        
-        // If source is already of the target type, cast and return directly
-        if (targetClass.isInstance(source)) {
-            return targetClass.cast(source);
         }
         
         T target = targetSupplier.get();
@@ -177,11 +162,6 @@ public class BeanUtil {
             return null;
         }
         
-        // If source is already of the target type, cast and return directly
-        if (targetClass.isInstance(source)) {
-            return targetClass.cast(source);
-        }
-        
         T target = createTarget(targetClass);
         BeanCopier copier = getBeanCopierWithConverter(source.getClass(), targetClass);
         copier.copy(source, target, converter);
@@ -196,11 +176,6 @@ public class BeanUtil {
     public static <T> T copyWithNested(Object source, Class<T> targetClass, Map<String, NestedConverter<?, ?>> nestedConverters) {
         if (source == null) {
             return null;
-        }
-        
-        // If source is already of the target type, cast and return directly
-        if (targetClass.isInstance(source)) {
-            return targetClass.cast(source);
         }
 
         // 创建目标对象
@@ -370,9 +345,13 @@ public class BeanUtil {
     }
     
     // 私有构造器防止实例化
-    private BeanUtil() {
+    private BeanUtilBak() {
         throw new AssertionError("Cannot instantiate utility class");
     }
+
+
+
+
 
     /**
      * 集合拷贝（Collection<sourceType> -> List<targetType>）

@@ -29,10 +29,10 @@
             <groupId>com.alibaba.fastjson2</groupId>
             <artifactId>fastjson2</artifactId>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>ma.glasnost.orika</groupId>
             <artifactId>orika-core</artifactId>
-        </dependency>
+        </dependency>-->
 
         <dependency>
             <groupId>org.jeasy</groupId>

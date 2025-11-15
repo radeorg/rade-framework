@@ -1,5 +1,7 @@
 package org.dows.rade.crud;
 
+import com.mybatisflex.core.BaseMapper;
+
 /**
  * @description: </br>
  * @author: lait.zhang@gmail.com
@@ -8,7 +10,7 @@ package org.dows.rade.crud;
  * <author>      <time>      <version>    <desc>
  * 修改人姓名      修改时间        版本号       描述
  */
-public interface CrudMapper {
+public interface CrudMapper<T> extends BaseMapper<T> {
 
 
 }
