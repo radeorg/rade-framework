@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -11,5 +12,5 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "rade.api.mock")
 public class ApiMockProperties {
     private boolean enabled;
-    private Set<String> packages;
+    private Set<String> packages = new HashSet<>();
 }
