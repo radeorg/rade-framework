@@ -19,7 +19,7 @@ public class AnnotationExtractor {
         // 定义需要处理的注解类型
         Class<? extends Annotation>[] annotationTypes = new Class[]{
                 UriParam.class,
-                PathParam.class,
+                UriPath.class,
                 UriBody.class,
                 UriHeader.class
         };

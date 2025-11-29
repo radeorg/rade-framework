@@ -1,22 +1,58 @@
-package org.dows.rade.notice;
+package org.dows.rade.notifier;
 
-import cn.hutool.core.bean.BeanUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dows.rade.exchange.ExchangeMessage;
 import org.dows.rade.exchange.ExchangeRequest;
-import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class NoticeClient {
-    private final RestTemplate restTemplate;
+public class NotifierClient {
+
+    // 通知器
+    private final Map<String, Notifier> noticers;
+
+    /**
+     * 发送通知
+     *
+     * @param noticeMessage
+     * @param returnType
+     */
+    public void notice(ExchangeMessage noticeMessage, Class<?> returnType) {
+        ExchangeRequest request = noticeMessage.getRequest();
+        List<String> handlers = request.getHandlers();
+        for (String handler : handlers) {
+            // todo thread and callback
+            Notifier notifier = noticers.get(handler);
+            if (notifier != null) {
+                notifier.notice(noticeMessage, returnType);
+            }
+        }
+    }
+
+    /**
+     * 查询通知是否成功
+     *
+     * @return
+     */
+    public Boolean isSuccess() {
+
+        return false;
+    }
+
+
+    public void callback() {
+
+    }
+
+
+
+    /*private final RestTemplate restTemplate;
 
     public void notice(NoticeMessage noticeMessage) {
         // 获取 endpoint 和 HTTP 方法
@@ -60,7 +96,7 @@ public class NoticeClient {
             throw new RuntimeException("Failed to rerun process instance", e);
         }
 
-    }
+    }*/
 
 
 }

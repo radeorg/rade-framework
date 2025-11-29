@@ -1,5 +1,6 @@
 package org.dows.rade.exchange;
 
+import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.dows.rade.util.PlaceholderUtil;
 import org.springframework.http.HttpMethod;
@@ -7,8 +8,7 @@ import org.springframework.http.HttpMethod;
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface ExchangeMessage extends Serializable {
@@ -31,6 +31,8 @@ public interface ExchangeMessage extends Serializable {
         Map<String, Field> bodyFields = new HashMap<>();
         @JsonIgnore
         Map<String, Field> headerFields = new HashMap<>();
+        @JsonIgnore
+        List<Class<?>> handlers = new ArrayList<>();
     }
 
     @JsonIgnore
@@ -47,7 +49,11 @@ public interface ExchangeMessage extends Serializable {
     @JsonIgnore
     private RequestMetadata extractRequestMetadata(Class<?> clazz) {
         RequestMetadata metadata = new RequestMetadata();
-
+        // 获取类上的注解
+        Handler handler = clazz.getAnnotation(Handler.class);
+        if (handler != null) {
+            metadata.handlers.addAll(Arrays.asList(handler.value()));
+        }
         // 解析 @Uri 注解
         Uri uriAnnotation = clazz.getAnnotation(Uri.class);
         if (uriAnnotation == null) {
@@ -73,12 +79,13 @@ public interface ExchangeMessage extends Serializable {
 
         metadata.endpointTemplate = endpoint;
 
+
         // 提取字段上的注解信息
         Map<Class<? extends Annotation>, Map<String, Field>> annotationFieldMap =
                 AnnotationExtractor.extractFieldsByAnnotations(clazz);
 
         metadata.uriParamFields = annotationFieldMap.getOrDefault(UriParam.class, new HashMap<>());
-        metadata.pathParamFields = annotationFieldMap.getOrDefault(PathParam.class, new HashMap<>());
+        metadata.pathParamFields = annotationFieldMap.getOrDefault(UriPath.class, new HashMap<>());
         metadata.bodyFields = annotationFieldMap.getOrDefault(UriBody.class, new HashMap<>());
         metadata.headerFields = annotationFieldMap.getOrDefault(UriHeader.class, new HashMap<>());
 
@@ -89,9 +96,11 @@ public interface ExchangeMessage extends Serializable {
     private ExchangeRequest buildRequestFromMetadata(RequestMetadata metadata) {
         ExchangeRequest exchangeRequest = new ExchangeRequest();
         exchangeRequest.setHttpMethod(metadata.httpMethod);
-
         String endpoint = metadata.endpointTemplate;
-
+        // 设置处理器
+        for (Class<?> handler : metadata.handlers) {
+            exchangeRequest.addHandler(StrUtil.lowerFirst(handler.getSimpleName()));
+        }
         try {
             // 处理 URI 参数
             if (!metadata.uriParamFields.isEmpty()) {
@@ -121,11 +130,11 @@ public interface ExchangeMessage extends Serializable {
                     field.setAccessible(true);
                     Object value = field.get(this);
                     String pathValue = null;
+                    String defValue = field.getAnnotation(UriPath.class).defValue();
                     if (value != null) {
                         pathValue = value.toString();
                     } else {
-                        //@PathParam(value = "host", defValue = "${hina.eaglee.dolphin.host:http://10.0.20.25:12345}")
-                        String defValue = field.getAnnotation(PathParam.class).defValue();
+                        //@UriPath(value = "host", defValue = "${hina.eaglee.dolphin.host:http://10.0.20.25:12345}")
                         if (!defValue.isEmpty()) {
                             pathValue = PlaceholderUtil.resolve(defValue);
                         }
@@ -135,7 +144,9 @@ public interface ExchangeMessage extends Serializable {
                     }
                 }
             }
-
+            if (endpoint.contains("{")) {
+                throw new IllegalArgumentException("endpoint contains {}: " + endpoint);
+            }
             exchangeRequest.setEndpoint(endpoint);
 
             // 处理 Body 参数
@@ -144,11 +155,11 @@ public interface ExchangeMessage extends Serializable {
                     Field field = entry.getValue();
                     field.setAccessible(true);
                     Object value = field.get(this);
+                    //@UriPath(value = "host", defValue = "${hina.eaglee.dolphin.host:http://10.0.20.25:12345}")
+                    String defValue = field.getAnnotation(UriBody.class).defValue();
                     if (value != null) {
                         exchangeRequest.addBody(entry.getKey(), value);
                     } else {
-                        //@PathParam(value = "host", defValue = "${hina.eaglee.dolphin.host:http://10.0.20.25:12345}")
-                        String defValue = field.getAnnotation(UriBody.class).defValue();
                         if (!defValue.isEmpty()) {
                             value = PlaceholderUtil.resolve(defValue);
                             exchangeRequest.addBody(entry.getKey(), value);
@@ -163,11 +174,13 @@ public interface ExchangeMessage extends Serializable {
                     Field field = entry.getValue();
                     field.setAccessible(true);
                     Object value = field.get(this);
+                    //@UriPath(value = "host", defValue = "${hina.eaglee.dolphin.host:http://10.0.20.25:12345}")
+                    UriHeader annotation = field.getAnnotation(UriHeader.class);
+                    String defValue = annotation.defValue();
+                    String prefix = annotation.prefix();
                     if (value != null) {
-                        exchangeRequest.addHeader(entry.getKey(), value);
+                        exchangeRequest.addHeader(entry.getKey(), prefix + value);
                     } else {
-                        //@PathParam(value = "host", defValue = "${hina.eaglee.dolphin.host:http://10.0.20.25:12345}")
-                        String defValue = field.getAnnotation(UriHeader.class).defValue();
                         if (!defValue.isEmpty()) {
                             value = PlaceholderUtil.resolve(defValue);
                             exchangeRequest.addHeader(entry.getKey(), value);
@@ -228,7 +241,7 @@ public interface ExchangeMessage extends Serializable {
         }
 
         // todo 统一处理uri 中的path参数
-        Map<String, Object> pathMap = classMapMap.get(PathParam.class);
+        Map<String, Object> pathMap = classMapMap.get(UriPath.class);
         if (pathMap != null) {
             *//*for (String k : pathMap.keySet()){
                 endpoint = endpoint.replace("{" + k + "}", pathMap.get(k).toString());

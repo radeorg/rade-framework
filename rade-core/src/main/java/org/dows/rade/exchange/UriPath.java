@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface PathParam {
+public @interface UriPath {
     String value() default "";
     // 默认值
     String defValue() default "";

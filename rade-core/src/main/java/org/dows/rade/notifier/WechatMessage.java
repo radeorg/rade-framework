@@ -1,15 +1,16 @@
-package org.dows.rade.notice;
+package org.dows.rade.notifier;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.dows.rade.annotation.Skip;
+import org.dows.rade.exchange.ExchangeMessage;
 import org.dows.rade.exchange.Uri;
 import org.dows.rade.exchange.UriHeader;
 import org.dows.rade.exchange.UriParam;
 
 @Uri("post https://qyapi.weixin.qq.com/cgi-bin/webhook/send")
 @Data
-public class WechatMessage implements NoticeMessage {
+public class WechatMessage implements ExchangeMessage {
     // 遇到skip 跳过或忽略该参数
     @Skip
     // 该注解会将参数名和对应的值追加到请求的 URL 中

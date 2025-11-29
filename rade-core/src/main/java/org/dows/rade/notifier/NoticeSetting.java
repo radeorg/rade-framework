@@ -1,4 +1,4 @@
-package org.dows.rade.notice;
+package org.dows.rade.notifier;
 
 import lombok.Data;
 
@@ -8,4 +8,5 @@ import java.util.List;
 public class NoticeSetting {
     private boolean enable;
     private List<String> wechatKeys;
+    private List<String> emails;
 }

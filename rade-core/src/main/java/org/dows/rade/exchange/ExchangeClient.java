@@ -1,7 +1,6 @@
 package org.dows.rade.exchange;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.json.JSONUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
@@ -30,13 +29,13 @@ public class ExchangeClient {
     private boolean isBasicType(Class<?> clazz) {
         return clazz.isPrimitive() || BASIC_TYPES.contains(clazz);
     }
+
     public <T> T exchange(ExchangeMessage message, Class<T> responseType) {
-        log.info("exchange message: {}", message);
+        log.info("exchange request : {}, response: {}", message, responseType);
         ExchangeRequest exchangeRequest = message.getRequest();
 
         HttpHeaders headers = new HttpHeaders();
         exchangeRequest.getHeaders().forEach((key, value) -> headers.add(key, value.toString()));
-//        headers.set("token", token);
         headers.setContentType(MediaType.APPLICATION_JSON);
         try {
             // 针对不同 HTTP 方法采用不同的传参方式
@@ -46,31 +45,38 @@ public class ExchangeClient {
                 Map<String, Object> stringObjectMap = BeanUtil.beanToMap(message);
                 // 添加查询参数
                 stringObjectMap.forEach(builder::queryParam);
-                // 这里需要将 dolphinRequest 对象的属性转换为查询参数
+                // 这里需要将对象的属性转换为查询参数
                 HttpEntity<?> requestEntity = new HttpEntity<>(headers);
-                ResponseEntity<String> response = restTemplate.exchange(
+                ResponseEntity<T> response = restTemplate.exchange(
                         builder.toUriString(),
                         exchangeRequest.getHttpMethod(),
                         requestEntity,
-                        String.class
+                        responseType
                 );
-                String body = response.getBody();
-                log.info("notice response: {}", body);
-                return JSONUtil.toBean(body, responseType);
+                //String body = response.getBody();
+                if(response.getStatusCode().is2xxSuccessful()){
+                    T t = response.getBody();
+                    log.info("exchange get response: {}", t);
+                    return t;
+                } else {
+                    throw new RestClientException("调用报错：");
+                }
+                //return JSONUtil.toBean(body, responseType);
             } else {
                 HttpEntity<?> requestEntity = new HttpEntity<>(message, headers);
-                ResponseEntity<String> response = restTemplate.exchange(
+                ResponseEntity<T> response = restTemplate.exchange(
                         exchangeRequest.getEndpoint(),
                         exchangeRequest.getHttpMethod(),
                         requestEntity,
-                        String.class
+                        responseType
                 );
-                String body = response.getBody();
-                if(isBasicType(responseType)){
-                    return (T) body;
+                if(response.getStatusCode().is2xxSuccessful()){
+                    T t = response.getBody();
+                    log.info("exchange post|put|delete response: {}", t);
+                    return t;
+                } else {
+                    throw new RestClientException("调用报错：");
                 }
-                log.info("notice response: {}", body);
-                return JSONUtil.toBean(body, responseType);
             }
         } catch (RestClientException e) {
             log.error("Failed to rerun process instance", e);
@@ -110,7 +116,7 @@ public class ExchangeClient {
                         String.class
                 );
                 String body = response.getBody();
-                log.info("notice response: {}", body);
+                log.info("notifier response: {}", body);
                 return BeanUtil.toBean(body, responseType);
             } else {
                 HttpEntity<?> requestEntity = new HttpEntity<>(message, headers);
@@ -121,7 +127,7 @@ public class ExchangeClient {
                         String.class
                 );
                 String body = response.getBody();
-                log.info("notice response: {}", body);
+                log.info("notifier response: {}", body);
                 return BeanUtil.toBean(body, responseType);
             }
         } catch (RestClientException e) {
