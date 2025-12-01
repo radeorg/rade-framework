@@ -5,6 +5,8 @@ import cn.hutool.extra.spring.SpringUtil;
 import org.springframework.core.env.Environment;
 import org.springframework.util.PropertyPlaceholderHelper;
 
+import java.io.Serializable;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -66,5 +68,19 @@ public class PlaceholderUtil {
         String input = "${hina.eaglee.dolphin.host: http://10.0.20.25:12345}${hina.eaglee.dolphin.host: http://10.0.20.25:12345}";
         String placeholder = extractPlaceholder(input);
         System.out.println(placeholder); // 输出: hina.eaglee.dolphin.host:http://10.0.20.25:12345
+    }
+
+    public static String replace(String template, Map<String, ? extends Serializable> params) {
+        if (StrUtil.isBlank(template) || params == null || params.isEmpty()) {
+            return template;
+        }
+        
+        String result = template;
+        for (Map.Entry<String, ? extends Serializable> entry : params.entrySet()) {
+            String placeholder = "${" + entry.getKey() + "}";
+            String value = entry.getValue() != null ? entry.getValue().toString() : "";
+            result = result.replace(placeholder, value);
+        }
+        return result;
     }
 }
