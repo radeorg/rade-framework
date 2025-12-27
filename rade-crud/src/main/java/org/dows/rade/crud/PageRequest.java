@@ -1,4 +1,4 @@
-package org.dows.rade.mybatisflex;
+package org.dows.rade.crud;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -21,10 +21,13 @@ public class PageRequest {
 
     @Schema(description = "排序字段", example = "startTime:DESC,state:ASC")
     private String orderBys;
-    @JsonIgnore
-    private Integer offset;
 
+    @JsonIgnore
+    public String getOrderBys() {
+        return OrderByBuilder.build(this.orderBys, this.getClass());
+    }
+    @JsonIgnore
     public Integer getOffset() {
-        return this.offset = (this.pageNum - 1) * this.pageSize;
+        return (this.pageNum - 1) * this.pageSize;
     }
 }

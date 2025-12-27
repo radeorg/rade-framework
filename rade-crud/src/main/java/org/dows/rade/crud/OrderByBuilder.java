@@ -1,4 +1,4 @@
-package org.dows.rade.mybatisflex;
+package org.dows.rade.crud;
 
 import cn.hutool.core.util.ClassUtil;
 import cn.hutool.core.util.StrUtil;

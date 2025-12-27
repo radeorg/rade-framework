@@ -12,7 +12,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 审计字段插入监听器
  * 用于自动填充创建时间、修改时间、创建人、修改人等字段
  */
-@Component
 public class AuditFieldInsertListener implements InsertListener {
 
     // 缓存实体类的字段信息，避免重复反射
