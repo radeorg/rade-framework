@@ -1,10 +1,11 @@
-package org.dows.rade.mybatis;
+package org.dows.rade.mybatisflex;
 
 import com.mybatisflex.core.FlexGlobalConfig;
 import com.mybatisflex.core.audit.AuditManager;
 import com.mybatisflex.core.audit.ConsoleMessageCollector;
 import com.mybatisflex.core.audit.MessageCollector;
 import com.mybatisflex.spring.boot.MyBatisFlexCustomizer;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
  * @author dows
  * @version 1.0.0
  */
-@Configuration
 public class MyBatisFlexConfig implements MyBatisFlexCustomizer {
 
     @Override
@@ -37,11 +37,13 @@ public class MyBatisFlexConfig implements MyBatisFlexCustomizer {
 
         // 注册全局插入监听器
         globalConfig.registerInsertListener(autoSnowflakeIdInsertListener(), Object.class);
+        // 注册审计字段插入监听器
+        globalConfig.registerInsertListener(auditFieldInsertListener(), Object.class);
+        
+        // 注册全局更新监听器
+        globalConfig.registerUpdateListener(auditFieldUpdateListener(), Object.class);
     }
 
-    /**
-     * 自定义消息收集器
-     */
     /**
      * 自定义消息收集器
      */
@@ -57,7 +59,22 @@ public class MyBatisFlexConfig implements MyBatisFlexCustomizer {
     public AutoSnowflakeIdInsertListener autoSnowflakeIdInsertListener() {
         return new AutoSnowflakeIdInsertListener();
     }
-
+    
+    /**
+     * 审计字段插入监听器
+     */
+    @Bean
+    public AuditFieldInsertListener auditFieldInsertListener() {
+        return new AuditFieldInsertListener();
+    }
+    
+    /**
+     * 审计字段更新监听器
+     */
+    @Bean
+    public AuditFieldUpdateListener auditFieldUpdateListener() {
+        return new AuditFieldUpdateListener();
+    }
 
 //    /**
 //     * 自定义雪花ID生成器
