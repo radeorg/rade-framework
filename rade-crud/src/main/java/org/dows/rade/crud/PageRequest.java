@@ -23,8 +23,8 @@ public class PageRequest {
     private String orderBys;
 
     @JsonIgnore
-    public String getOrderBys() {
-        return OrderByBuilder.build(this.orderBys, this.getClass());
+    public String getOrderBys(Class<?> entityClass) {
+        return OrderByBuilder.build(this.orderBys, entityClass);
     }
     @JsonIgnore
     public Integer getOffset() {

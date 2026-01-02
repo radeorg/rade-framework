@@ -35,6 +35,9 @@ public class OrderByBuilder {
                 sb.append(StrUtil.toUnderlineCase(orderByFields[0])).append(" ").append(orderByFields[1]).append(",");
             }
         }
+        if (sb.isEmpty()) {
+            return "";
+        }
         sb.deleteCharAt(sb.length() - 1);
         return sb.toString();
     }

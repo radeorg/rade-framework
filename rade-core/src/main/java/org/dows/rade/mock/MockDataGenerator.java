@@ -134,7 +134,7 @@ public class MockDataGenerator {
         }));
         
         // Description相关关键字处理器
-        KEYWORD_PROCESSORS.add(new KeywordProcessor("desc", field -> {
+        KEYWORD_PROCESSORS.add(new KeywordProcessor("descr", field -> {
             if (field.getType() == String.class) {
                 return faker.lorem().sentence();
             }

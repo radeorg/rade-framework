@@ -1,9 +1,12 @@
-package org.dows.rade.tree;
+package org.dows.rade.mybatisflex;
 
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.dows.rade.crud.BaseService;
 import org.dows.rade.crud.BaseTreeEntity;
+import org.dows.rade.tree.TreeException;
+import org.dows.rade.tree.TreeExceptionStatusCode;
+import org.dows.rade.tree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
