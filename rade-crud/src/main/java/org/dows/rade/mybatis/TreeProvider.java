@@ -142,12 +142,12 @@ public class TreeProvider {
         String sqlTemplate = """
                 WITH RECURSIVE cte AS (
                     SELECT d.${columns}, d.level - 1 AS level_num
-                    FROM ${tableName} AS d WHERE pid = ${pid}
+                    FROM ${tableName} AS d WHERE parent_id = ${pid}
                     UNION ALL
                     SELECT d.${columns}, c.level + 1 AS level_num
-                    FROM ${tableName} AS d INNER JOIN cte c ON d.pid = c.${tableName}_id
+                    FROM ${tableName} AS d INNER JOIN cte c ON d.parent_id = c.${tableName}_id
                 )
-                SELECT * FROM cte where deleted = 0 ORDER BY ${tableName}_id
+                SELECT * FROM cte where delete_time is NULL ORDER BY ${tableName}_id
                 """;
         return PlaceholderUtil.replace(sqlTemplate, Map.of(
                 "columns", columns,
@@ -185,10 +185,10 @@ public class TreeProvider {
         String sqlTemplate = """
                 WITH RECURSIVE cte AS (
                     SELECT d.${columns}, d.level - 1 AS level_num
-                    FROM ${tableName} AS d WHERE pid = ${pid}
+                    FROM ${tableName} AS d WHERE parent_id = ${pid}
                     UNION ALL
                     SELECT d.${columns}, c.level + 1
-                    FROM ${tableName} AS d INNER JOIN cte c ON d.pid = c.${tableName}_id
+                    FROM ${tableName} AS d INNER JOIN cte c ON d.parent_id = c.${tableName}_id
                 )
                 SELECT * FROM cte where deleted = 0 and level = ${level} ORDER BY ${tableName}_id
                 """;
@@ -235,8 +235,8 @@ public class TreeProvider {
                 .append("d." + columns)
                 .append(", c.level + 1 FROM ")
                 .append(tableName)
-                .append(" AS d INNER JOIN cte c ON d.pid = c." + tableName + "_id) ")
-                .append("SELECT * FROM cte where deleted = 0 ")
+                .append(" AS d INNER JOIN cte c ON d.parent_id = c." + tableName + "_id) ")
+                .append("SELECT * FROM cte where delete_time is NULL ")
                 .append("ORDER BY " + tableName + "_id");
         return sql.toString();
     }
