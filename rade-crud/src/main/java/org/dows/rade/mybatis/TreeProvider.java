@@ -3,8 +3,12 @@ package org.dows.rade.mybatis;
 import com.mybatisflex.core.table.TableInfo;
 import com.mybatisflex.core.table.TableInfoFactory;
 import org.apache.ibatis.jdbc.SQL;
+import org.dows.rade.tree.DemoTree;
+import org.dows.rade.tree.OrgTreeEntity;
 import org.dows.rade.util.PlaceholderUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -191,7 +195,7 @@ public class TreeProvider {
         return PlaceholderUtil.replace(sqlTemplate, Map.of(
                 "columns", columns,
                 "tableName", tableName,
-                "pid", pid,
+                "parentId", pid,
                 "level", level
         ));
     }
@@ -237,13 +241,13 @@ public class TreeProvider {
         return sql.toString();
     }
 
-    public String listTreeByAppointColumn(Class<?> clazz, Map<String,String> kvMap) {
+    public String listTreeByAppointColumn1(Class<?> clazz, Map<String, Object> kvMap) {
         TableInfo tableInfo = TableInfoFactory.ofEntityClass(clazz);
         String tableName = tableInfo.getTableName();
         String columns = String.join(",d.", tableInfo.getAllColumns());
-        String condition="";
+        String condition = "";
         if (kvMap != null) {
-            for (Map.Entry<String, String> entry : kvMap.entrySet()) {
+            for (Map.Entry<String, Object> entry : kvMap.entrySet()) {
                 condition += " and ";
                 condition += entry.getKey();
                 condition += "=";
@@ -263,12 +267,126 @@ public class TreeProvider {
                 .append("d." + columns)
                 .append(", c.level + 1 FROM ")
                 .append(tableName)
-                .append(" AS d INNER JOIN cte c ON d.pid = c." + tableName + "_id) ")
-                .append("SELECT * FROM cte where deleted = 0 ")
+                .append(" AS d INNER JOIN cte c ON d.parent_id = c." + tableName + "_id) ")
+                .append("SELECT * FROM cte where delete_time != null ")
                 .append("ORDER BY " + tableName + "_id");
         return sql.toString();
     }
 
+
+    public String listTreeByAppointColumn2(Class<?> clazz, Map<String, Object> kvMap) {
+        TableInfo tableInfo = TableInfoFactory.ofEntityClass(clazz);
+        String tableName = tableInfo.getTableName();
+
+        // 1. 列名统一加别名前缀
+        String columns = Arrays.stream(tableInfo.getAllColumns())
+                .filter(c -> !"level".equalsIgnoreCase(c))
+                .map(c -> "d." + c)
+                .collect(Collectors.joining(","));
+
+        // 2. 条件片段收集到 List，避免多余 and
+        List<String> conditions = new ArrayList<>();
+        if (kvMap != null) {
+            kvMap.forEach((k, v) -> conditions.add(k + "=" + v));
+        }
+
+        // 3. 组装最终 SQL
+        StringBuilder sql = new StringBuilder()
+                .append("WITH RECURSIVE cte AS ( ")
+                .append("SELECT ").append(columns).append(", 0 AS level ")
+                .append("FROM ").append(tableName).append(" AS d ");
+
+        if (!conditions.isEmpty()) {
+            sql.append("WHERE ").append(String.join(" AND ", conditions));
+        }
+
+        sql.append(" UNION ALL ")
+                .append("SELECT ").append(columns).append(", c.level + 1 ")
+                .append("FROM ").append(tableName).append(" AS d ")
+                .append("JOIN cte c ON d.parent_id = c.").append(tableName).append("_id) ")
+                .append("SELECT * FROM cte WHERE delete_time IS NULL ")
+                .append("ORDER BY ").append(tableName).append("_id");
+
+        return sql.toString();
+    }
+
+
+
+    /**
+     * @param clazz       实体类
+     * @param kvMap       锚点查询条件（只过滤根节点）
+     * @param depth    要递归的最大深度；传 null 表示不限制
+     */
+    public String listTreeByAppointColumn(Class<?> clazz,
+                                          Map<String, Object> kvMap,
+                                          Integer depth) {
+
+        TableInfo tableInfo = TableInfoFactory.ofEntityClass(clazz);
+        String tableName = tableInfo.getTableName();
+
+        /* 1. 去掉实体里可能重名的 level 列 */
+        String columns = Arrays.stream(tableInfo.getAllColumns())
+                //.filter(c -> !"level".equalsIgnoreCase(c))
+                .map(c -> "d." + c)
+                .collect(Collectors.joining(","));
+
+        /* 2. 锚点条件（只影响根节点） */
+        List<String> anchorConds = new ArrayList<>();
+        if (kvMap != null) {
+            kvMap.forEach((k, v) -> anchorConds.add(k + "=" + toSqlLiteral(v)));
+        }
+        /* 3. 组装 SQL */
+        StringBuilder sql = new StringBuilder()
+                .append("WITH RECURSIVE cte AS ( ")
+                .append("SELECT ").append(columns).append(", 0 AS depth ")
+                .append("FROM ").append(tableName).append(" AS d ");
+
+        if (!anchorConds.isEmpty()) {
+            sql.append("WHERE ").append(String.join(" AND ", anchorConds));
+        }
+
+        /* 4. 递归成员：同时限制深度 */
+        sql.append(" UNION ALL ")
+                .append("SELECT ").append(columns).append(", c.depth + 1 ")
+                .append("FROM ").append(tableName).append(" AS d ")
+                .append("JOIN cte c ON d.parent_id = c.").append(tableName).append("_id ");
+
+        if (depth != null) {
+            sql.append("WHERE c.depth < ").append(depth);   // 关键：控制深度
+        }
+
+        sql.append(") ")
+                .append("SELECT * FROM cte ")
+                .append("WHERE delete_time IS NULL ")
+                .append("ORDER BY ").append(tableName).append("_id");
+
+        return sql.toString();
+    }
+
+
+
+    /**
+     * 把值按类型转成 SQL 字面量
+     */
+    private static String toSqlLiteral(Object v) {
+        if (v == null) {
+            return "NULL";
+        }
+        // 字符串、日期、时间等需要加单引号
+        if (v instanceof String || v instanceof java.util.Date) {
+            // 简单转义单引号，防止 SQL 注入
+            String s = v.toString().replace("'", "''");
+            return "'" + s + "'";
+        }
+        // 数字、布尔直接 toString
+        return v.toString();
+    }
+
+    public static void main(String[] args) {
+        TreeProvider treeProvider = new TreeProvider();
+        String s = treeProvider.listTreeByAppointColumn(OrgTreeEntity.class, Map.of("name", "技术组"),1);
+        System.out.printf(s);
+    }
 
    /* public String selectTree(Class<?> clazz) {
         TableInfo tableInfo = TableInfoFactory.ofEntityClass(clazz);
