@@ -23,6 +23,7 @@
         <module>rade-config</module>
         <module>rade-plugin</module>
         <module>rade-pdf</module>
+        <module>rade-tool</module>
         <!--<module>rade-dbo</module>
         <module>rade-mgc</module>
         <module>rade-feign</module>-->
